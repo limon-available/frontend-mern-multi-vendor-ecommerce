@@ -11,13 +11,13 @@ const Card = () => {
 
     const dispatch = useDispatch()
     const {userInfo} = useSelector(state => state.auth) 
-    const {card_products,successMessage,price,buy_product_item,shipping_fee,outofstock_products} = useSelector(state => state.card) 
+    const {card_products,successMessage,price,buy_product_item,shipping_fee,outofstock_products,card_cleared} = useSelector(state => state.card) 
 
     const navigate = useNavigate()  
 
     useEffect(() => {
         dispatch(get_card_products(userInfo.id))
-    },[])
+    },[dispatch,userInfo,card_cleared])
 
     const redirect = () => {
         navigate('/shipping',{

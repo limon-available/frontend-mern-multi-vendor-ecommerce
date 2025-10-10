@@ -130,7 +130,8 @@ export const cardReducer = createSlice({
         successMessage: '', 
         shipping_fee: 0,
         outofstock_products : [],
-        buy_product_item : 0
+        buy_product_item: 0,
+        card_cleared:false
     },
     reducers : {
 
@@ -141,7 +142,20 @@ export const cardReducer = createSlice({
         reset_count: (state,_) => {
             state.card_product_count = 0
             state.wishlist_count = 0
-        }
+        },
+        clear_cart: (state, _) => {
+    state.card_products = [];
+    state.card_product_count = 0;
+    state.price = 0;
+    state.shipping_fee = 0;
+    state.outofstock_products = [];
+            state.buy_product_item = 0;
+            state.card_cleared=true
+        },
+        reset_cart_flag: (state, _) => {
+        state.cart_cleared = false; // 🧹 ফ্ল্যাগ আবার reset করো
+    }
+
  
     },
     extraReducers: (builder) => {
@@ -196,5 +210,5 @@ export const cardReducer = createSlice({
         
     }
 })
-export const {messageClear,reset_count} = cardReducer.actions
+export const {messageClear,reset_count,clear_cart} = cardReducer.actions
 export default cardReducer.reducer

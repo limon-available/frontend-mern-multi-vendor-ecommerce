@@ -9,7 +9,11 @@ import toast from 'react-hot-toast';
 import io from 'socket.io-client'
 import {FaList} from 'react-icons/fa'
 
-const socket = io('http://localhost:5000')
+ const socket = io('http://localhost:5000', {
+  transports: ['websocket', 'polling'],
+  withCredentials: true
+})
+
 
 const Chat = () => {
 
@@ -23,10 +27,12 @@ const Chat = () => {
     const [receverMessage,setReceverMessage] = useState('')
     const [activeSeller,setActiveSeller] = useState([])
     const [show, setShow] = useState(false)
-    
+     
     useEffect(() => {
         socket.emit('add_user',userInfo.id, userInfo)
-    },[])
+    },[userInfo])
+    console.log("userInfo.id", userInfo.id)
+    console.log("sellerId", sellerId)
 
     useEffect(() => {
         dispatch(add_friend({
@@ -52,6 +58,7 @@ const Chat = () => {
             setReceverMessage(msg)
         })
         socket.on('activeSeller', (sellers) => {
+            console.log("Active Sellers:", sellers);
             setActiveSeller(sellers)
         })
     },[])
@@ -79,6 +86,8 @@ const Chat = () => {
         scrollRef.current?.scrollIntoView({ behavior: 'smooth'})
     },[fb_messages])
 
+    console.log("my_friends:", my_friends)
+
     return (
         <div className='bg-white p-3 rounded-md'>
     <div className='w-full flex'>
@@ -90,7 +99,8 @@ const Chat = () => {
             </div>
             <div className='w-full flex flex-col text-slate-600 py-4 h-[400px] pr-3'>
                {
-                my_friends.map((f,i) => <Link to={`/dashboard/chat/${f.fdId}`} key={i}  className={`flex gap-2 justify-start items-center pl-2 py-[5px]`} >
+                    my_friends.map((f, i) => <Link to={`/dashboard/chat/${f.fdId}`} key={i} className={`flex gap-2 justify-start items-center pl-2 py-[5px]`} >
+                    
                 <div className='w-[30px] h-[30px] rounded-full relative'>
                    
                    {
@@ -116,7 +126,20 @@ const Chat = () => {
             {
             activeSeller.some(c => c.sellerId === currentFd.fdId) && <div className='w-[10px] h-[10px] rounded-full bg-green-500 absolute right-0 bottom-0'></div>
             } 
-              <img src={currentFd.image} />
+ <img
+  className='w-[30px] h-[30px] rounded-full object-cover'
+  src={
+    currentFd?.image?.startsWith('http')
+      ? currentFd.image
+      : currentFd?.image
+      ? `http://localhost:5000/${currentFd.image}`
+      :`http://localhost:5000/avatarDefualt`
+  }
+  alt="user"
+/>
+
+
+
                     </div>
                     <span>{currentFd.name}</span>
                 
@@ -130,29 +153,35 @@ const Chat = () => {
                 <div className='h-[400px] w-full bg-slate-100 p-3 rounded-md'>
                     <div className='w-full h-full overflow-y-auto flex flex-col gap-3'>
 
-        {
-            fb_messages.map((m, i) => {
-                if (currentFd?.fdId !== m.receverId) {
-                    return(
-                 <div ref={scrollRef} key={i} className='w-full flex gap-2 justify-start items-center text-[14px]'>
-            <img className='w-[30px] h-[30px] ' src="http://localhost:3000/images/user.png" alt="" />
-            <div className='p-2 bg-purple-500 text-white rounded-md'>
-                <span>{m.message}</span>
-            </div>
-        </div>
-              )     
-                }else{ 
-                  return (
-                    <div ref={scrollRef} key={i} className='w-full flex gap-2 justify-end items-center text-[14px]'>
-                    <img className='w-[30px] h-[30px] ' src="http://localhost:3000/images/user.png" alt="" />
-                    <div className='p-2 bg-cyan-500 text-white rounded-md'>
-                        <span>{m.message}</span>
-                    </div>
-                </div> 
-                  ) 
-                }
-            })
-        } 
+                                    {
+                                        fb_messages.map((m, i) => {
+                                            // যদি message sender আমি নিজে হই ➜ right side
+                                            if (m.senderId === userInfo.id) {
+                                                return (
+                                                    <div ref={scrollRef} key={i} className='w-full flex gap-2 justify-end items-center text-[14px]'>
+                                                        <div className='p-2 bg-cyan-500 text-white rounded-md'>
+                                                            <span>{m.message}</span>
+                                                        </div>
+                                                        <img className='w-[30px] h-[30px]' src="http://localhost:3000/images/user.png" alt="" />
+                                                    </div>
+                                                )
+                                            } else {
+                                                // না হলে (অন্যজন পাঠিয়েছে) ➜ left side
+                                                return (
+                                                    <div ref={scrollRef} key={i} className='w-full flex gap-2 justify-start items-center text-[14px]'>
+                                                        <img className='w-[30px] h-[30px]' src={currentFd?.image || "http://localhost:3000/images/user.png"} alt="" />
+                                                        <div className='p-2 bg-purple-500 text-white rounded-md'>
+                                                            <span>{m.message}</span>
+                                                        
+                                                        </div>
+                                                    </div>
+                                                )
+                                            }
+                                        })
+
+                                    }
+                                    
+                                    
                     </div>
                 </div>
                 <div className='flex p-2 justify-between items-center w-full'>

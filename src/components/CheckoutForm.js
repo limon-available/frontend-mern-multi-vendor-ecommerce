@@ -1,16 +1,26 @@
- import React, { useState } from 'react';
+import React, { useState } from 'react';
+ import axios from 'axios'
 import { PaymentElement,LinkAuthenticationElement,useStripe,useElements } from '@stripe/react-stripe-js' 
+import { clear_cart } from '../store/reducers/cardReducer';
+import { useDispatch ,useSelector} from 'react-redux';
+import api from '../api/api';
+ 
+ 
+const CheckoutForm = ({ orderId }) => {
 
-const CheckoutForm = ({orderId}) => {
-
-    localStorage.setItem('orderId',orderId)
+    const {userInfo
+} = useSelector((state) => state.auth);
+const userId = userInfo?.id
+console.log("userID",userInfo)
     const stripe = useStripe()
     const elements = useElements()
     const [message, setMessage] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
+    const dispatch=useDispatch()
 
     const paymentElementOptions = {
-        loyout: 'tabs'
+        layout: 'tabs'
     }
 
     const submit = async (e) => {
@@ -19,17 +29,29 @@ const CheckoutForm = ({orderId}) => {
             return
         }
         setIsLoading(true)
-        const { error } = await stripe.confirmPayment({
+        const { error,paymentIntent} = await stripe.confirmPayment({
             elements,
-            confirmParams: {
-                return_url: 'http://localhost:3000/order/confirm'
-            } 
+            redirect: 'if_required'
         })
-        if (error.type === 'card_error' || error.type === 'validation_error') {
-            setMessage(error.message)
-        } else {
-            setMessage('An Unexpected error occured')
+        if (error) {
+            if (error.type === 'card_error' || error.type === 'validation_error') {
+                setMessage(error.message)
+            } else {
+                setMessage('An Unexpected error occured')
+            }
         }
+        else if (paymentIntent && paymentIntent.status === 'succeeded') {
+            // ✅ Payment success
+             setIsSuccess(true);
+            setMessage('Payment Successful! 🎉');
+            dispatch(clear_cart())
+            
+             localStorage.removeItem('card_products');
+            const response = await api.delete('/order/card_item_delete', { data: { userId } });
+     console.log("in checkout",response)
+   
+    }
+
         setIsLoading(false)
     }
 
