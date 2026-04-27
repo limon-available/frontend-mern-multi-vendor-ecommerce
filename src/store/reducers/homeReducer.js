@@ -32,12 +32,12 @@ export const get_products = createAsyncThunk(
 // End Method 
 
 
-export const price_range_product = createAsyncThunk(
-    'product/price_range_product',
+export const get_price_range = createAsyncThunk(
+    'product/get_price_range',
     async(_, { fulfillWithValue,rejectWithValue}) => {
         try {
-            const {data} = await api.get('/home/price-range-latest-product')
-             console.log(data)
+            const {data} = await api.get('/home/get_price_range')
+             console.log("in home reducer",data)
             return fulfillWithValue(data)
         } catch (error) {
             console.log(error.respone)
@@ -51,11 +51,21 @@ export const query_products = createAsyncThunk(
     'product/query_products',
     async(query , { fulfillWithValue,rejectWithValue}) => {
         try {
-            const {data} = await api.get(`/home/query-products?category=${query.category}&&rating=${query.rating}&&lowPrice=${query.low}&&highPrice=${query.high}&&sortPrice=${query.sortPrice}&&pageNumber=${query.pageNumber}&&searchValue=${query.searchValue ? query.searchValue : ''} `)
+            const { data } = await api.get('/home/query-products', {
+  params: {
+    category: query.category,
+    rating: query.rating,
+    low: query.low,
+    high: query.high,
+    sortPrice: query.sortPrice,
+    pageNumber: query.pageNumber,
+    searchValue: query.searchValue || ''
+  }
+});
             //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            console.log(error.response)
             return rejectWithValue(error)
         }
     }
@@ -139,7 +149,7 @@ export const homeReducer = createSlice({
         discount_product : [],
         priceRange : {
             low: 0,
-            high: 100
+            high: 0
         },
         product: {},
         relatedProducts: [],
@@ -170,10 +180,14 @@ export const homeReducer = createSlice({
             state.topRated_product = payload.topRated_product;
             state.discount_product = payload.discount_product;
         })
-        .addCase(price_range_product.fulfilled, (state, { payload }) => { 
-            state.latest_product = payload.latest_product;
-            state.priceRange = payload.priceRange; 
-        })
+       .addCase(get_price_range.pending, (state) => {
+             state.loader = true;
+       })
+            .addCase(get_price_range.fulfilled, (state, { payload }) => {
+                console.log("state", state);
+                console.log("payload", payload);
+                state.priceRange=payload.priceRange
+        }  )  
         .addCase(query_products.fulfilled, (state, { payload }) => { 
             state.products = payload.products;
             state.totalProduct = payload.totalProduct;

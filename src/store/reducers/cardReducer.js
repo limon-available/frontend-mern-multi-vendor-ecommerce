@@ -20,8 +20,9 @@ export const get_card_products = createAsyncThunk(
     'card/get_card_products',
     async(userId, { rejectWithValue,fulfillWithValue }) => {
         try {
+            console.log("userId",userId)
             const {data} = await api.get(`/home/product/get-card-product/${userId}`) 
-            // console.log(data)
+             console.log("in get_card_products",data)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -116,7 +117,19 @@ export const remove_wishlist = createAsyncThunk(
     }
 )
 // End Method 
-
+export const clear_cart_db = createAsyncThunk(
+    'card/clear_cart_db',
+    async(_, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.delete('/order/cart_item_delete', {
+                withCredentials: true
+            })
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
 
 export const cardReducer = createSlice({
     name: 'card',
@@ -130,7 +143,8 @@ export const cardReducer = createSlice({
         successMessage: '', 
         shipping_fee: 0,
         outofstock_products : [],
-        buy_product_item : 0
+        buy_product_item: 0,
+        card_cleared:false
     },
     reducers : {
 
@@ -141,7 +155,20 @@ export const cardReducer = createSlice({
         reset_count: (state,_) => {
             state.card_product_count = 0
             state.wishlist_count = 0
-        }
+        },
+        clear_cart: (state, _) => {
+    state.card_products = [];
+    state.card_product_count = 0;
+    state.price = 0;
+    state.shipping_fee = 0;
+    state.outofstock_products = [];
+    state.buy_product_item = 0;
+    state.card_cleared=true
+        },
+        reset_cart_flag: (state, _) => {
+        state.card_cleared = false; 
+    }
+
  
     },
     extraReducers: (builder) => {
@@ -193,8 +220,17 @@ export const cardReducer = createSlice({
             state.wishlist = state.wishlist.filter(p => p._id !== payload.wishlistId); 
             state.wishlist_count = state.wishlist_count - 1
         })
+        .addCase(clear_cart_db.fulfilled, (state) => {
+    state.card_products = [];
+    state.card_product_count = 0;
+    state.price = 0;
+    state.shipping_fee = 0;
+    state.outofstock_products = [];
+    state.buy_product_item = 0;
+    state.card_cleared = true;
+})
         
     }
 })
-export const {messageClear,reset_count} = cardReducer.actions
+export const {messageClear,reset_count,clear_cart} = cardReducer.actions
 export default cardReducer.reducer

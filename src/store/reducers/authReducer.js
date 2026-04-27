@@ -7,7 +7,7 @@ export const customer_register = createAsyncThunk(
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
             const {data} = await api.post('/customer/customer-register',info)
-            localStorage.setItem('customerToken',data.token)
+            
            // console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
@@ -21,8 +21,10 @@ export const customer_login = createAsyncThunk(
     'auth/customer_login',
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.post('/customer/customer-login',info)
-            localStorage.setItem('customerToken',data.token)
+            const { data } = await api.post('/customer/customer-login', info, {
+                withCredentials:true
+            })
+            
            // console.log(data) 
             return fulfillWithValue(data)
         } catch (error) {
@@ -30,7 +32,21 @@ export const customer_login = createAsyncThunk(
         }
     }
 )
-// End Method 
+
+export const get_user_info = createAsyncThunk(
+    'auth/get_user_info',
+    async(_ ,{rejectWithValue, fulfillWithValue}) => {
+          
+        try {
+            const {data} = await api.get('/get_user_info',{withCredentials: true})
+             console.log(data)            
+            return fulfillWithValue(data)
+        } catch (error) {
+            // console.log(error.response.data)
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
 
 const decodeToken = (token) => {
     if (token) {
@@ -41,14 +57,30 @@ const decodeToken = (token) => {
     }
 }
 // End Method 
+    export const logout = createAsyncThunk(
+        'auth/logout',
+        async(_,{rejectWithValue, fulfillWithValue}) => {
+             
+            try {
 
+      console.log("API CALLING..."); 
+                const { data } = await api.get('/logout', { withCredentials: true })    
+                console.log("data", data);
+                return fulfillWithValue(data)
+            } catch (error) {
+             console.log(error)
+                return rejectWithValue(error.response.data)
+            }
+        }
+    )
 
 
 export const authReducer = createSlice({
     name: 'auth',
     initialState:{
-        loader : false,
-        userInfo : decodeToken(localStorage.getItem('customerToken')),
+        loader: false,
+        userLoaded:false,
+        userInfo :null,
         errorMessage : '',
         successMessage: '', 
     },
@@ -59,7 +91,7 @@ export const authReducer = createSlice({
             state.successMessage = ""
         },
         user_reset: (state,_) => {
-            state.userInfo = ""
+            state.userInfo =null
         }
  
     },
@@ -73,25 +105,42 @@ export const authReducer = createSlice({
             state.loader = false;
         })
         .addCase(customer_register.fulfilled, (state, { payload }) => {
-            const userInfo = decodeToken(payload.token)
+        
             state.successMessage = payload.message;
             state.loader = false;
-            state.userInfo = userInfo
+            state.userInfo = payload.userInfo
         })
-
+        .addCase(get_user_info.pending, (state) => {
+            state.userLoaded = false;
+            state.loader = true;
+})    
+        .addCase(get_user_info.fulfilled, (state, { payload }) => {
+                    state.loader =false;
+            state.userInfo = payload.userInfo;
+            state.userLoaded = true;
+        })
+            .addCase(get_user_info.rejected, (state) => {
+                state.userLoaded = true; // ✅ even if fail
+                state.loader = false;
+})
         .addCase(customer_login.pending, (state, { payload }) => {
             state.loader = true;
         })
         .addCase(customer_login.rejected, (state, { payload }) => {
             state.errorMessage = payload.error;
-            state.loader = false;
+            state.loader =false;
         })
         .addCase(customer_login.fulfilled, (state, { payload }) => {
-            const userInfo = decodeToken(payload.token)
+            console.log("payload",payload)
             state.successMessage = payload.message;
-            state.loader = false;
-            state.userInfo = userInfo
+            state.loader =false;
+            state.userInfo =payload.userInfo
         })
+                    .addCase(logout.fulfilled, (state) => {
+                state.userInfo =null;
+               
+                state.successMessage = "Logged out successfully";
+              });
     }
 })
 export const {messageClear,user_reset} = authReducer.actions

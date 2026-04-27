@@ -51,8 +51,34 @@ export const get_order_details = createAsyncThunk(
     }
 )
 // End Method 
- 
-
+ export const confirm_order = createAsyncThunk(
+  'orders/confirm_order',
+  async (orderId, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.get(
+        `/order/order_confirm/${orderId}`,
+        {},
+        { withCredentials: true }
+      )
+      return fulfillWithValue(data)
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
+export const cart_item_delete = createAsyncThunk(
+  'order/cart_item_delete',
+  async (_, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const { data } = await api.delete('/order/cart_item_delete', {
+        withCredentials: true   // 🔥 MUST (cookie auth)
+      })
+      return fulfillWithValue(data)
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
 
 export const orderReducer = createSlice({
     name: 'order',
@@ -80,7 +106,18 @@ export const orderReducer = createSlice({
             console.log(payload)
             state.myOrder = payload.order; 
         })
-        
+         .addCase(confirm_order.rejected, (state, { payload }) => {
+         state.errorMessage = payload.message
+         })
+       .addCase(confirm_order.fulfilled, (state, { payload }) => {
+        state.successMessage = payload.message
+       })
+        .addCase(cart_item_delete.fulfilled, (state, { payload }) => {
+    state.successMessage = "Cart cleared from DB"
+})
+.addCase(cart_item_delete.rejected, (state, { payload }) => {
+    state.errorMessage = payload.error
+})
     }
 })
 export const {messageClear} = orderReducer.actions
