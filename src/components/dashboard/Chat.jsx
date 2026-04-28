@@ -11,10 +11,8 @@ import {
   updateMessage,
 } from "../../store/reducers/chatReducer";
 import toast from "react-hot-toast";
-import io from "socket.io-client";
+import socket from "../../utils/socket";
 import { FaList } from "react-icons/fa";
-
-const socket = io("https://backend-multi-vendor-ecommerce-xa4b.onrender.com");
 
 const Chat = () => {
   const scrollRef = useRef();
@@ -31,8 +29,10 @@ const Chat = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    socket.emit("add_user", userInfo.id, userInfo);
-  }, []);
+    if (userInfo?.id) {
+      socket.emit("add_user", userInfo.id, userInfo);
+    }
+  }, [userInfo]);
 
   useEffect(() => {
     dispatch(
