@@ -154,7 +154,8 @@ const Shops = () => {
                 </h2>
 
                 {priceRange.low !== undefined &&
-                  priceRange.high !== undefined && (
+                  priceRange.high !== undefined &&
+                  priceRange.high > priceRange.low && (
                     <>
                       <Range
                         step={5}
