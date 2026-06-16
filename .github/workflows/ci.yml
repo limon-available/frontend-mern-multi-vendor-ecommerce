@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    name: Install & build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        # CRA (react-scripts) treats lint warnings as errors when CI=true, which
+        # GitHub Actions sets automatically. This repo still has pre-existing
+        # warnings (e.g. useEffect deps), so CI is set to false to build on
+        # warnings. Tighten to "true" once the warnings are resolved.
+        run: npm run build
+        env:
+          CI: false
