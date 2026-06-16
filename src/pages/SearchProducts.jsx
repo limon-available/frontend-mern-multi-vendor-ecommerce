@@ -158,12 +158,16 @@ const SearchProducts = () => {
                       {children}
                     </div>
                   )}
-                  renderThumb={({ props }) => (
-                    <div
-                      className="w-[15px] h-[15px] bg-[#059473] rounded-full"
-                      {...props}
-                    />
-                  )}
+                  renderThumb={({ props }) => {
+                    const { key, ...rest } = props;
+                    return (
+                      <div
+                        key={key}
+                        className="w-[15px] h-[15px] bg-[#059473] rounded-full"
+                        {...rest}
+                      />
+                    );
+                  }}
                 />
                 <div>
                   <span className="text-slate-800 font-bold text-lg">
