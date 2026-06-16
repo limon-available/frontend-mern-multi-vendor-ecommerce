@@ -21,7 +21,7 @@ const FeatureProducts = ({ products }) => {
     if (userInfo) {
       dispatch(
         add_to_card({
-          userId: userInfo.id,
+          userId: userInfo._id,
           quantity: 1,
           productId: id,
         }),
@@ -45,7 +45,7 @@ const FeatureProducts = ({ products }) => {
   const add_wishlist = (pro) => {
     dispatch(
       add_to_wishlist({
-        userId: userInfo.id,
+        userId: userInfo._id,
         productId: pro._id,
         name: pro.name,
         price: pro.price,

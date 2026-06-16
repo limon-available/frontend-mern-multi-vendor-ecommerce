@@ -12,8 +12,8 @@ const Orders = () => {
   const { myOrders, successMessage } = useSelector((state) => state.order);
 
   useEffect(() => {
-    if (userInfo?.id) {
-      dispatch(get_orders({ status: state, customerId: userInfo.id }));
+    if (userInfo?._id) {
+      dispatch(get_orders({ status: state, customerId: userInfo._id }));
     }
   }, [state, userInfo, successMessage]);
 

@@ -14,10 +14,8 @@ import {
 import toast from "react-hot-toast";
 
 const Card = () => {
-  console.log("🔥 Card component rendered");
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
-  console.log("userInfo", userInfo);
   const {
     card_products,
     successMessage,
@@ -31,7 +29,9 @@ const Card = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(get_card_products(userInfo.id));
+    if (userInfo?._id) {
+      dispatch(get_card_products(userInfo._id));
+    }
   }, [dispatch, userInfo, card_cleared]);
 
   const redirect = () => {
@@ -72,7 +72,10 @@ const Card = () => {
   return (
     <div>
       <Header />
-      <section className='bg-[url("http://localhost:3000/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+      <section
+        className="h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left"
+        style={{ backgroundImage: 'url("/images/banner/shop.png")' }}
+      >
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">

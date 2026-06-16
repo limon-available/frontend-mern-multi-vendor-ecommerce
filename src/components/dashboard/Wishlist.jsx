@@ -17,8 +17,10 @@ const Wishlist = () => {
   const { wishlist, successMessage } = useSelector((state) => state.card);
 
   useEffect(() => {
-    dispatch(get_wishlist_products(userInfo.id));
-  }, []);
+    if (userInfo?._id) {
+      dispatch(get_wishlist_products(userInfo._id));
+    }
+  }, [dispatch, userInfo]);
 
   useEffect(() => {
     if (successMessage) {

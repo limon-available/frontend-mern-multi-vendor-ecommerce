@@ -14,7 +14,6 @@ const Shipping = () => {
     shipping_fee = 0,
     items = 0,
   } = location.state || {};
-  console.log("location.state", products);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
@@ -53,7 +52,7 @@ const Shipping = () => {
         shipping_fee,
         items,
         shippingInfo: state,
-        userId: userInfo.id,
+        userId: userInfo._id,
         navigate,
       }),
     );
@@ -62,7 +61,10 @@ const Shipping = () => {
   return (
     <div>
       <Header />
-      <section className='bg-[url("http://localhost:3000/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+      <section
+        className="h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left"
+        style={{ backgroundImage: 'url("/images/banner/shop.png")' }}
+      >
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">

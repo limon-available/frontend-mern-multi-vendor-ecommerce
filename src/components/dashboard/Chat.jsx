@@ -29,25 +29,27 @@ const Chat = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (userInfo?.id) {
-      socket.emit("add_user", userInfo.id, userInfo);
+    if (userInfo?._id) {
+      socket.emit("add_user", userInfo._id, userInfo);
     }
   }, [userInfo]);
 
   useEffect(() => {
-    dispatch(
-      add_friend({
-        sellerId: sellerId || "",
-        userId: userInfo.id,
-      }),
-    );
-  }, [sellerId]);
+    if (userInfo?._id) {
+      dispatch(
+        add_friend({
+          sellerId: sellerId || "",
+          userId: userInfo._id,
+        }),
+      );
+    }
+  }, [sellerId, userInfo]);
 
   const send = () => {
     if (text) {
       dispatch(
         send_message({
-          userId: userInfo.id,
+          userId: userInfo._id,
           text,
           sellerId,
           name: userInfo.name,
@@ -77,7 +79,7 @@ const Chat = () => {
     if (receverMessage) {
       if (
         sellerId === receverMessage.senderId &&
-        userInfo.id === receverMessage.receverId
+        userInfo._id === receverMessage.receverId
       ) {
         dispatch(updateMessage(receverMessage));
       } else {
@@ -158,7 +160,7 @@ const Chat = () => {
                         >
                           <img
                             className="w-[30px] h-[30px] "
-                            src="http://localhost:3000/images/user.png"
+                            src="/images/user.png"
                             alt=""
                           />
                           <div className="p-2 bg-purple-500 text-white rounded-md">
@@ -175,7 +177,7 @@ const Chat = () => {
                         >
                           <img
                             className="w-[30px] h-[30px] "
-                            src="http://localhost:3000/images/user.png"
+                            src="/images/user.png"
                             alt=""
                           />
                           <div className="p-2 bg-cyan-500 text-white rounded-md">

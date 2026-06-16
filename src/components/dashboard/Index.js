@@ -12,8 +12,10 @@ const Index = () => {
     const {recentOrders,totalOrder,pendingOrder,cancelledOrder} = useSelector(state => state.dashboard)
 
     useEffect(() => {
-        dispatch(get_dashboard_index_data(userInfo.id))
-    },[])
+        if (userInfo?._id) {
+            dispatch(get_dashboard_index_data(userInfo._id))
+        }
+    },[dispatch, userInfo])
 
     const redirect = (ord) => {
         let items = 0;

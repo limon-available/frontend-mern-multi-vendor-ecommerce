@@ -34,7 +34,7 @@ const ShopProducts = ({ styles, products }) => {
     if (userInfo) {
       dispatch(
         add_to_card({
-          userId: userInfo.id,
+          userId: userInfo._id,
           quantity: 1,
           productId: id,
         }),
@@ -48,7 +48,7 @@ const ShopProducts = ({ styles, products }) => {
     if (userInfo) {
       dispatch(
         add_to_wishlist({
-          userId: userInfo.id,
+          userId: userInfo._id,
           productId: product._id,
           name: product.name,
           price: product.price,
