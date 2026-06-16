@@ -18,8 +18,6 @@ const SearchProducts = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category");
   const searchValue = searchParams.get("value");
-  console.log("category:", category);
-  console.log("searchValue:", searchValue);
 
   const dispatch = useDispatch();
   const {
@@ -93,12 +91,13 @@ const SearchProducts = () => {
     setRating(0);
     setPageNumber(1);
   };
-  console.log(priceRange);
-  console.log(state.values);
   return (
     <div>
       <Header />
-      <section className='bg-[url("http://localhost:3000/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
+      <section
+        className="h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left"
+        style={{ backgroundImage: 'url("/images/banner/shop.png")' }}
+      >
         <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
@@ -183,23 +182,23 @@ const SearchProducts = () => {
                     <div
                       key={r}
                       onClick={() => {
-                        console.log("clicked", r);
                         setRating(r);
                       }}
                       className={`border p-3 cursor-pointer ${
                         rating === r ? "bg-gray-200" : ""
                       }`}
                     >
-                      <div className="flex flex-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i}>
-                            {i < r ? (
-                              <AiFillStar className={"text-orange-500"} />
-                            ) : (
-                              <CiStar className={"text-gray-200"} />
-                            )}
-                          </span>
-                        ))}
+                      <div className="flex flex-row items-center gap-1">
+                        {[...Array(5)].map((_, i) =>
+                          i < r ? (
+                            <AiFillStar
+                              key={i}
+                              className="shrink-0 text-orange-500"
+                            />
+                          ) : (
+                            <CiStar key={i} className="shrink-0 text-gray-200" />
+                          )
+                        )}
                       </div>
                     </div>
                   ))}
@@ -207,10 +206,10 @@ const SearchProducts = () => {
                   {/* reset option */}
                   <div
                     onClick={resetRating}
-                    className="text-orange-500 flex gap-2 text-xl cursor-pointer"
+                    className="text-orange-500 flex flex-row items-center gap-2 text-xl cursor-pointer"
                   >
                     {[...Array(5)].map((_, i) => (
-                      <CiStar key={i} />
+                      <CiStar key={i} className="shrink-0" />
                     ))}
                   </div>
                 </div>

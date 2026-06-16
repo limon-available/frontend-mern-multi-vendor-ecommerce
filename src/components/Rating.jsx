@@ -3,72 +3,45 @@ import { FaStar, FaStarHalfAlt } from "react-icons/fa";
 import { CiStar } from "react-icons/ci";
 
 const Rating = ({ ratings }) => {
+  const full = "shrink-0 text-[#EDBB0E]";
+  const empty = "shrink-0 text-slate-600";
+
   return (
     <>
       {ratings >= 1 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStar />
-        </span>
+        <FaStar className={full} />
       ) : ratings >= 0.5 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStarHalfAlt />
-        </span>
+        <FaStarHalfAlt className={full} />
       ) : (
-        <span className="text-slate-600">
-          <CiStar />
-        </span>
+        <CiStar className={empty} />
       )}
       {ratings >= 2 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStar />
-        </span>
+        <FaStar className={full} />
       ) : ratings >= 1.5 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStarHalfAlt />
-        </span>
+        <FaStarHalfAlt className={full} />
       ) : (
-        <span className="text-slate-600">
-          <CiStar />
-        </span>
+        <CiStar className={empty} />
       )}
       {ratings >= 3 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStar />
-        </span>
+        <FaStar className={full} />
       ) : ratings >= 2.5 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStarHalfAlt />
-        </span>
+        <FaStarHalfAlt className={full} />
       ) : (
-        <span className="text-slate-600">
-          <CiStar />
-        </span>
+        <CiStar className={empty} />
       )}
       {ratings >= 4 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStar />
-        </span>
+        <FaStar className={full} />
       ) : ratings >= 3.5 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStarHalfAlt />
-        </span>
+        <FaStarHalfAlt className={full} />
       ) : (
-        <span className="text-slate-600">
-          <CiStar />
-        </span>
+        <CiStar className={empty} />
       )}
       {ratings >= 5 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStar />
-        </span>
+        <FaStar className={full} />
       ) : ratings >= 4.5 ? (
-        <span className="text-[#EDBB0E]">
-          <FaStarHalfAlt />
-        </span>
+        <FaStarHalfAlt className={full} />
       ) : (
-        <span className="text-slate-600">
-          <CiStar />
-        </span>
+        <CiStar className={empty} />
       )}
     </>
   );

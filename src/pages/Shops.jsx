@@ -209,34 +209,30 @@ const Shops = () => {
                     <div
                       key={r}
                       onClick={() => setRating(r)}
-                      className="flex items-center gap-2 text-xl cursor-pointer  hover:text-red-400 transition"
+                      className="flex flex-row items-center gap-2 text-xl cursor-pointer hover:text-red-400 transition"
                     >
-                      {[...Array(5)].map((_, i) => (
-                        <span key={i}>
-                          {console.log(i)}
-                          {i < r ? (
-                            <AiFillStar
-                              className={
-                                rating === r
-                                  ? "text-red-500"
-                                  : "text-orange-500"
-                              }
-                            />
-                          ) : (
-                            <CiStar className="text-orange-500" />
-                          )}
-                        </span>
-                      ))}
+                      {[...Array(5)].map((_, i) =>
+                        i < r ? (
+                          <AiFillStar
+                            key={i}
+                            className={`shrink-0 ${
+                              rating === r ? "text-red-500" : "text-orange-500"
+                            }`}
+                          />
+                        ) : (
+                          <CiStar key={i} className="shrink-0 text-orange-500" />
+                        )
+                      )}
                     </div>
                   ))}
 
                   {/* reset */}
                   <div
                     onClick={resetRating}
-                    className="flex gap-2 text-xl cursor-pointer text-orange-500"
+                    className="flex flex-row items-center gap-2 text-xl cursor-pointer text-orange-500"
                   >
                     {[...Array(5)].map((_, i) => (
-                      <CiStar key={i} />
+                      <CiStar key={i} className="shrink-0" />
                     ))}
                   </div>
                 </div>
