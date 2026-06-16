@@ -79,6 +79,18 @@ const CategoryShop = () => {
     setRating(0);
     setPageNumber(1);
   };
+
+  // Keep the slider min/max and its values from drifting apart: priceRange comes
+  // from Redux and updates a render before the sync effect refreshes state.values,
+  // so clamp the values to the current bounds on every render to avoid react-range
+  // throwing "value is smaller than min".
+  const rangeMin = priceRange.low || 0;
+  const rangeMax = priceRange.high || 1000;
+  const clampedValues = [
+    Math.min(Math.max(state.values[0], rangeMin), rangeMax),
+    Math.min(Math.max(state.values[1], rangeMin), rangeMax),
+  ];
+
   return (
     <div>
       <Header />
@@ -124,9 +136,9 @@ const CategoryShop = () => {
 
                 <Range
                   step={5}
-                  min={priceRange.low || 0}
-                  max={priceRange.high || 1000}
-                  values={state.values}
+                  min={rangeMin}
+                  max={rangeMax}
+                  values={clampedValues}
                   onChange={(values) => setState({ values })}
                   renderTrack={({ props, children }) => (
                     <div
@@ -145,8 +157,8 @@ const CategoryShop = () => {
                 />
                 <div>
                   <span className="text-slate-800 font-bold text-lg">
-                    ${Math.floor(state.values[0])} - $
-                    {Math.floor(state.values[1])}
+                    ${Math.floor(clampedValues[0])} - $
+                    {Math.floor(clampedValues[1])}
                   </span>
                 </div>
               </div>
