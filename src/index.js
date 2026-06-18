@@ -6,12 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store/index';
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from './components/ErrorBoundary';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ErrorBoundary>
   <Provider store={store} >
     <Suspense>
-    <App /> 
+    <App />
     <Toaster
       toastOptions={{
         position : 'top-right',
@@ -19,10 +21,11 @@ root.render(
           background : '#283046',
           color : 'white'
         }
-      }} 
+      }}
     />
     </Suspense>
     </Provider>
+  </ErrorBoundary>
 );
 
 // If you want to start measuring performance in your app, pass a function

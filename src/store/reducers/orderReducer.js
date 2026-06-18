@@ -15,9 +15,8 @@ export const place_order = createAsyncThunk(
                     orderId: data.orderId 
                 }
             })
-            console.log(data)
         } catch (error) {
-            console.log(error.response)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
         }
         
     }
@@ -28,8 +27,7 @@ export const get_orders = createAsyncThunk(
     'order/get_orders',
     async({customerId,status}, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.get(`/home/coustomer/get-orders/${customerId}/${status}`) 
-             console.log(data)
+            const {data} = await api.get(`/home/coustomer/get-orders/${customerId}/${status}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -42,8 +40,7 @@ export const get_order_details = createAsyncThunk(
     'order/get_order_details',
     async(orderId , { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.get(`/home/coustomer/get-order-details/${orderId}`) 
-            // console.log(data)
+            const {data} = await api.get(`/home/coustomer/get-order-details/${orderId}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -102,9 +99,8 @@ export const orderReducer = createSlice({
         .addCase(get_orders.fulfilled, (state, { payload }) => { 
             state.myOrders = payload.orders; 
         })
-        .addCase(get_order_details.fulfilled, (state, { payload }) => { 
-            console.log(payload)
-            state.myOrder = payload.order; 
+        .addCase(get_order_details.fulfilled, (state, { payload }) => {
+            state.myOrder = payload.order;
         })
          .addCase(confirm_order.rejected, (state, { payload }) => {
          state.errorMessage = payload.message

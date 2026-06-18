@@ -16,6 +16,12 @@ import {
   get_card_products,
   get_wishlist_products,
 } from "../store/reducers/cardReducer";
+import { SOCIAL_LINKS } from "../config/socialLinks";
+
+const LANGUAGES = [
+  { code: "en", label: "English", flag: "/images/language.png" },
+  { code: "bn", label: "Bengali", flag: "/images/language.png" },
+];
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -25,7 +31,6 @@ const Header = () => {
   const { card_product_count, wishlist_count, card_cleared } = useSelector(
     (state) => state.card,
   );
-  console.log("card_products", card_product_count);
   const { pathname } = useLocation();
 
   const [showShidebar, setShowShidebar] = useState(true);
@@ -33,6 +38,18 @@ const Header = () => {
 
   const [searchValue, setSearchValue] = useState("");
   const [category, setCategory] = useState("");
+
+  const [language, setLanguage] = useState(
+    () => localStorage.getItem("language") || "en",
+  );
+
+  const selectLanguage = (code) => {
+    setLanguage(code);
+    localStorage.setItem("language", code);
+  };
+
+  const currentLanguage =
+    LANGUAGES.find((l) => l.code === language) || LANGUAGES[0];
 
   const search = () => {
     navigate(`/products/search?category=${category}&value=${searchValue}`);
@@ -77,27 +94,53 @@ const Header = () => {
             <div>
               <div className="flex justify-center items-center gap-10">
                 <div className="flex justify-center items-center gap-4 text-black">
-                  <a href="#">
+                  <a
+                    href={SOCIAL_LINKS.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaFacebookF />
                   </a>
-                  <a href="#">
+                  <a
+                    href={SOCIAL_LINKS.twitter}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaTwitter />{" "}
                   </a>
-                  <a href="#">
+                  <a
+                    href={SOCIAL_LINKS.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaLinkedin />
                   </a>
-                  <a href="#">
+                  <a
+                    href={SOCIAL_LINKS.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <FaGithub />{" "}
                   </a>
                 </div>
                 <div className="flex group cursor-pointer text-slate-800 text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute before:absolute before:h-[18px] before:bg-[#afafaf] before:w-[1px] before:-left-[20px]">
-                  <img src="http://localhost:3000/images/language.png" alt="" />
+                  <img src={currentLanguage.flag} alt={currentLanguage.label} />
+                  <span>{currentLanguage.label}</span>
                   <span>
                     <IoMdArrowDropdown />
                   </span>
                   <ul className="absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10">
-                    <li>Hindi</li>
-                    <li>English</li>
+                    {LANGUAGES.map((l) => (
+                      <li
+                        key={l.code}
+                        onClick={() => selectLanguage(l.code)}
+                        className={`cursor-pointer hover:text-[#059473] ${
+                          language === l.code ? "text-[#059473]" : ""
+                        }`}
+                      >
+                        {l.label}
+                      </li>
+                    ))}
                   </ul>
                 </div>
 
@@ -136,7 +179,7 @@ const Header = () => {
             <div className="md-lg:w-full w-3/12 md-lg:pt-4">
               <div className="flex justify-between items-center">
                 <Link to="/">
-                  <img src="http://localhost:3000/images/logo.png" alt="" />
+                  <img src="/images/logo.png" alt="" />
                 </Link>
                 <div
                   className="justify-center items-center w-[30px] h-[30px] bg-white text-slate-600 border border-slate-600 rounded-sm cursor-pointer lg:hidden md-lg:flex xl:hidden hidden"
@@ -155,6 +198,7 @@ const Header = () => {
                 <ul className="flex justify-start items-start gap-8 text-sm font-bold uppercase md-lg:hidden">
                   <li>
                     <Link
+                      to="/"
                       className={`p-2 block ${pathname === "/" ? "text-[#059473]" : "text-slate-600"} `}
                     >
                       Home
@@ -171,6 +215,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
+                      to="/blog"
                       className={`p-2 block ${pathname === "/blog" ? "text-[#059473]" : "text-slate-600"} `}
                     >
                       Blog
@@ -178,6 +223,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
+                      to="/about"
                       className={`p-2 block ${pathname === "/about" ? "text-[#059473]" : "text-slate-600"} `}
                     >
                       About Us
@@ -185,6 +231,7 @@ const Header = () => {
                   </li>
                   <li>
                     <Link
+                      to="/contact"
                       className={`p-2 block ${pathname === "/contact" ? "text-[#059473]" : "text-slate-600"} `}
                     >
                       Contact Us
@@ -244,17 +291,27 @@ const Header = () => {
         >
           <div className="flex justify-start flex-col gap-6">
             <Link to="/">
-              <img src="http://localhost:3000/images/logo.png" alt="" />
+              <img src="/images/logo.png" alt="" />
             </Link>
             <div className="flex justify-start items-center gap-10">
               <div className="flex group cursor-pointer text-slate-800 text-sm justify-center items-center gap-1 relative after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px] after:absolute ">
-                <img src="http://localhost:3000/images/language.png" alt="" />
+                <img src={currentLanguage.flag} alt={currentLanguage.label} />
+                <span>{currentLanguage.label}</span>
                 <span>
                   <IoMdArrowDropdown />
                 </span>
                 <ul className="absolute invisible transition-all top-12 rounded-sm duration-200 text-white p-2 w-[100px] flex flex-col gap-3 group-hover:visible group-hover:top-6 group-hover:bg-black z-10">
-                  <li>Hindi</li>
-                  <li>English</li>
+                  {LANGUAGES.map((l) => (
+                    <li
+                      key={l.code}
+                      onClick={() => selectLanguage(l.code)}
+                      className={`cursor-pointer hover:text-[#059473] ${
+                        language === l.code ? "text-[#059473]" : ""
+                      }`}
+                    >
+                      {l.label}
+                    </li>
+                  ))}
                 </ul>
               </div>
               {userInfo ? (
@@ -285,6 +342,7 @@ const Header = () => {
             <ul className="flex flex-col justify-start items-start text-sm font-bold uppercase">
               <li>
                 <Link
+                  to="/"
                   className={`py-2 block ${pathname === "/" ? "text-[#059473]" : "text-slate-600"} `}
                 >
                   Home
@@ -301,6 +359,7 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to="/blog"
                   className={`py-2 block ${pathname === "/blog" ? "text-[#059473]" : "text-slate-600"} `}
                 >
                   Blog
@@ -308,6 +367,7 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to="/about"
                   className={`py-2 block ${pathname === "/about" ? "text-[#059473]" : "text-slate-600"} `}
                 >
                   About Us
@@ -315,6 +375,7 @@ const Header = () => {
               </li>
               <li>
                 <Link
+                  to="/contact"
                   className={`py-2 block ${pathname === "/contact" ? "text-[#059473]" : "text-slate-600"} `}
                 >
                   Contact Us
@@ -322,16 +383,32 @@ const Header = () => {
               </li>
             </ul>
             <div className="flex justify-start items-center gap-4 text-black">
-              <a href="#">
+              <a
+                href={SOCIAL_LINKS.facebook}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaFacebookF />
               </a>
-              <a href="#">
+              <a
+                href={SOCIAL_LINKS.twitter}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaTwitter />{" "}
               </a>
-              <a href="#">
+              <a
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaLinkedin />
               </a>
-              <a href="#">
+              <a
+                href={SOCIAL_LINKS.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FaGithub />{" "}
               </a>
             </div>

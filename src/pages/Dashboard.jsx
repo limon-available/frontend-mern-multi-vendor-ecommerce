@@ -21,7 +21,6 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    console.log("logout clicked");
     await dispatch(logout()).unwrap();
     dispatch(user_reset()); // redux user clear
     dispatch(reset_count()); // cart reset (optional but good)

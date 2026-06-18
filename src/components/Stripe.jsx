@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
-import axios from "axios";
 import CheckoutForm from "./CheckoutForm";
-const stripePromise = loadStripe(
-  "pk_test_51S5MXsBezsUpnBx3xqoKn2fNwm2haJQJLXs2tHbc8El265abcMLcLhUaQ1PkUlfpg4KEKWALNtSMLhsj49joUdKH00eH4gkZ2i",
-);
-const stripe = await stripePromise;
-console.log(stripe);
+import api from "../api/api";
+import { STRIPE_PUBLISHABLE_KEY } from "../config/app";
+
+const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 const Stripe = ({ price, orderId }) => {
   const [clientSecret, setClientSecret] = useState("");
@@ -21,14 +19,10 @@ const Stripe = ({ price, orderId }) => {
 
   const create_payment = async () => {
     try {
-      const { data } = await axios.post(
-        "https://backend-multi-vendor-ecommerce-xa4b.onrender.com/api/order/create-payment",
-        { price },
-        { withCredentials: true },
-      );
+      const { data } = await api.post("/order/create-payment", { price });
       setClientSecret(data.clientSecret);
     } catch (error) {
-      console.log(error.response.data);
+      setClientSecret("");
     }
   };
 

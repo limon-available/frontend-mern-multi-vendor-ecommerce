@@ -1,6 +1,7 @@
 import { io } from "socket.io-client";
+import { SOCKET_URL } from "../config/app";
 
- const socket = io("https://backend-multi-vendor-ecommerce-xa4b.onrender.com", {
+ const socket = io(SOCKET_URL, {
   withCredentials: true,
   transports: ["websocket"]  
  });

@@ -6,21 +6,32 @@ export const add_friend = createAsyncThunk(
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
             const {data} = await api.post('/chat/customer/add-customer-friend',info)
-            console.log("inside reducer",data)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
         }
     }
 )
-// End Method 
+// End Method
+
+export const get_friends = createAsyncThunk(
+    'chat/get_friends',
+    async(_, { rejectWithValue,fulfillWithValue }) => {
+        try {
+            const {data} = await api.get('/chat/customer/get-friends')
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+// End Method
 
 export const send_message = createAsyncThunk(
     'chat/send_message',
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
             const {data} = await api.post('/chat/customer/send-message-to-seller',info)
-            //  console.log(data)
              return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -54,7 +65,10 @@ export const chatReducer = createSlice({
     },
     extraReducers: (builder) => {
         builder 
-        .addCase(add_friend.fulfilled, (state, { payload }) => { 
+        .addCase(get_friends.fulfilled, (state, { payload }) => {
+            state.my_friends = payload.myFriends;
+        })
+        .addCase(add_friend.fulfilled, (state, { payload }) => {
             state.fb_messages = payload.messages;
             state.currentFd = payload.currentFd;
             state.my_friends = payload.MyFriends;

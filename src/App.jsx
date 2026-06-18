@@ -22,6 +22,9 @@ import Wishlist from "./components/dashboard/Wishlist";
 import OrderDetails from "./components/dashboard/OrderDetails";
 import Chat from "./components/dashboard/Chat";
 import ConfirmOrder from "./pages/ConfirmOrder";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Blog from "./pages/Blog";
 import { get_user_info } from "./store/reducers/authReducer";
 
 function App() {
@@ -30,7 +33,7 @@ function App() {
   useEffect(() => {
     dispatch(get_category());
     dispatch(get_user_info());
-  }, []);
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
@@ -46,6 +49,9 @@ function App() {
         <Route path="/products/search" element={<SearchProducts />} />
         <Route path="/product/details/:slug" element={<Details />} />
         <Route path="/order/confirm?" element={<ConfirmOrder />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/blog" element={<Blog />} />
 
         <Route path="/dashboard" element={<ProtectUser />}>
           <Route path="" element={<Dashboard />}>

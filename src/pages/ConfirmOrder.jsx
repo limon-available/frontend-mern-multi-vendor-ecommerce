@@ -4,12 +4,11 @@ import error from "../assets/error.png";
 import success from "../assets/success.png";
 import { Link } from "react-router-dom";
 import { FadeLoader } from "react-spinners";
-import axios from "axios";
+import api from "../api/api";
+import { STRIPE_PUBLISHABLE_KEY } from "../config/app";
 
 const load = async () => {
-  return await loadStripe(
-    "pk_test_51S5MXsBezsUpnBx3xqoKn2fNwm2haJQJLXs2tHbc8El265abcMLcLhUaQ1PkUlfpg4KEKWALNtSMLhsj49joUdKH00eH4gkZ2i",
-  );
+  return await loadStripe(STRIPE_PUBLISHABLE_KEY);
 };
 
 const ConfirmOrder = () => {
@@ -57,11 +56,11 @@ const ConfirmOrder = () => {
     const orderId = localStorage.getItem("orderId");
     if (orderId) {
       try {
-        await axios.get(`http://localhost:5000/api/order/confirm/${orderId}`);
+        await api.get(`/order/order_confirm/${orderId}`);
         localStorage.removeItem("orderId");
         setLoader(false);
       } catch (error) {
-        console.log(error.response.data);
+        setLoader(false);
       }
     }
   };

@@ -78,7 +78,7 @@ const OrderDetails = () => {
                 <div className="flex gap-2">
                   <img className="w-[55px] h-[55px]" src={p.images[0]} alt="" />
                   <div className="flex text-sm flex-col justify-start items-start">
-                    <Link> {p.name} </Link>
+                    <Link to={`/product/details/${p.slug}`}> {p.name} </Link>
                     <p>
                       {" "}
                       <span>Brand : {p.brand}</span>{" "}

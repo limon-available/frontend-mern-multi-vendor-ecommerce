@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   add_friend,
+  get_friends,
   messageClear,
   send_message,
   updateMessage,
@@ -34,11 +35,22 @@ const Chat = () => {
     }
   }, [userInfo]);
 
+  // Load the conversation list as soon as the customer is known, so the
+  // sidebar is populated even on /dashboard/chat with no seller selected.
   useEffect(() => {
     if (userInfo?._id) {
+      dispatch(get_friends());
+    }
+  }, [userInfo]);
+
+  useEffect(() => {
+    // Only fetch a conversation once a seller is actually selected. On the
+    // bare /dashboard/chat route there is no :sellerId param, so dispatching
+    // here would POST an empty sellerId and fail backend validation.
+    if (userInfo?._id && sellerId) {
       dispatch(
         add_friend({
-          sellerId: sellerId || "",
+          sellerId,
           userId: userInfo._id,
         }),
       );

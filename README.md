@@ -1,70 +1,126 @@
-# Getting Started with Create React App
+# Customer Frontend - Multi-Vendor Ecommerce
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Customer-facing React application for the multi-vendor ecommerce platform.
 
-## Available Scripts
+This app handles storefront browsing, product details, customer authentication, cart, wishlist, checkout, Stripe payment, order history, reviews, and customer-to-seller chat.
 
-In the project directory, you can run:
+## Tech Stack
 
-### `npm start`
+- React
+- Redux Toolkit
+- React Router
+- Tailwind CSS
+- Axios
+- Socket.IO Client
+- Stripe Elements
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Main Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Customer registration and login
+- Product listing, category filtering, search, and product details
+- Cart and wishlist management
+- Shipping and checkout flow
+- Stripe payment integration
+- Customer dashboard
+- Order history and order details
+- Product reviews
+- Real-time seller chat
 
-### `npm test`
+## Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Node.js 20+
+- npm
+- Running backend API
 
-### `npm run build`
+## Installation
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```bash
+npm install
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Environment Variables
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Create a `.env` file in this directory:
 
-### `npm run eject`
+```env
+REACT_APP_API_URL=http://localhost:5000
+REACT_APP_SOCKET_URL=http://localhost:5000
+REACT_APP_DASHBOARD_URL=http://localhost:3001
+REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_or_live_key
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+For production, use deployed HTTPS URLs:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```env
+REACT_APP_API_URL=https://your-backend-domain.com
+REACT_APP_SOCKET_URL=https://your-backend-domain.com
+REACT_APP_DASHBOARD_URL=https://your-dashboard-domain.com
+REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_live_or_test_key
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Development
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+Default local URL:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```text
+http://localhost:3000
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Production Build
 
-### Code Splitting
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+The optimized static output is generated in:
 
-### Analyzing the Bundle Size
+```text
+build/
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## API Configuration
 
-### Making a Progressive Web App
+API and socket configuration is centralized in:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```text
+src/config/app.js
+src/api/api.js
+src/utils/socket.js
+```
 
-### Advanced Configuration
+Avoid hardcoding backend URLs in components. Use the shared config and Axios instance.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Important Routes
 
-### Deployment
+- `/` - Home
+- `/shops` - Shop listing
+- `/products` - Category products
+- `/products/search` - Product search
+- `/product/details/:slug` - Product details
+- `/card` - Cart
+- `/shipping` - Shipping
+- `/payment` - Payment
+- `/dashboard` - Customer dashboard
+- `/dashboard/my-orders` - Customer orders
+- `/dashboard/my-wishlist` - Wishlist
+- `/dashboard/chat/:sellerId` - Seller chat
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Deployment Notes
 
-### `npm run build` fails to minify
+- Deploy as a static React build on Vercel, Netlify, or similar hosting.
+- Set all `REACT_APP_*` variables in the hosting provider.
+- Ensure the backend `CLIENT_ORIGINS` includes this app's deployed URL.
+- Use the same Stripe publishable key mode as the backend Stripe secret key.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Verification
+
+```bash
+npm run build
+```
+
+The current build passes, but the app still has existing ESLint warnings that should be cleaned before enforcing CI lint checks.
+

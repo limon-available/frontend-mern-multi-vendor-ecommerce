@@ -7,8 +7,7 @@ export const customer_register = createAsyncThunk(
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
             const {data} = await api.post('/customer/customer-register',info)
-            
-           // console.log(data)
+
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -24,8 +23,7 @@ export const customer_login = createAsyncThunk(
             const { data } = await api.post('/customer/customer-login', info, {
                 withCredentials:true
             })
-            
-           // console.log(data) 
+
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -39,10 +37,9 @@ export const get_user_info = createAsyncThunk(
           
         try {
             const {data} = await api.get('/get_user_info',{withCredentials: true})
-             console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error.response.data)
         }
     }
@@ -62,13 +59,10 @@ const decodeToken = (token) => {
         async(_,{rejectWithValue, fulfillWithValue}) => {
              
             try {
-
-      console.log("API CALLING..."); 
-                const { data } = await api.get('/logout', { withCredentials: true })    
-                console.log("data", data);
+                const { data } = await api.get('/logout', { withCredentials: true })
                 return fulfillWithValue(data)
             } catch (error) {
-             console.log(error)
+                if (process.env.NODE_ENV !== 'production') console.error(error)
                 return rejectWithValue(error.response.data)
             }
         }
@@ -131,7 +125,6 @@ export const authReducer = createSlice({
             state.loader =false;
         })
         .addCase(customer_login.fulfilled, (state, { payload }) => {
-            console.log("payload",payload)
             state.successMessage = payload.message;
             state.loader =false;
             state.userInfo =payload.userInfo

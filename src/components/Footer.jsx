@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaFacebookF } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa6";
@@ -7,6 +7,7 @@ import { FaGithub } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { FaHeart } from "react-icons/fa6";
 import { FaCartShopping } from "react-icons/fa6";
+import { SOCIAL_LINKS } from "../config/socialLinks";
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -15,6 +16,26 @@ const Footer = () => {
     (state) => state.card,
   );
 
+  const [email, setEmail] = useState("");
+  const [subscribeMsg, setSubscribeMsg] = useState({ type: "", text: "" });
+
+  const subscribe = (e) => {
+    e.preventDefault();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    if (!valid) {
+      setSubscribeMsg({
+        type: "error",
+        text: "Please enter a valid email address.",
+      });
+      return;
+    }
+    setSubscribeMsg({
+      type: "success",
+      text: "Thank you for subscribing!",
+    });
+    setEmail("");
+  };
+
   return (
     <footer className="bg-[#f3f6fa]">
       <div className="w-[85%] flex flex-wrap mx-auto border-b py-16 md-lg:pb-10 sm:pb-6">
@@ -22,7 +43,7 @@ const Footer = () => {
           <div className="flex flex-col gap-3">
             <img
               className="w-[190px] h-[70px]"
-              src="http://localhost:3000/images/logo.png"
+              src="/images/logo.png"
               alt="logo"
             />
             <ul className="flex flex-col gap-2 text-slate-600">
@@ -42,37 +63,37 @@ const Footer = () => {
               <div className="flex justify-between gap-[80px] lg:gap-[40px]">
                 <ul className="flex flex-col gap-2 text-slate-600 text-sm font-semibold">
                   <li>
-                    <Link>About Us </Link>
+                    <Link to="/about">About Us </Link>
                   </li>
                   <li>
-                    <Link>About Our Shop </Link>
+                    <Link to="/shops">About Our Shop </Link>
                   </li>
                   <li>
-                    <Link>Delivery Information </Link>
+                    <Link to="/contact">Delivery Information </Link>
                   </li>
                   <li>
-                    <Link>Privacy Policy </Link>
+                    <Link to="/about">Privacy Policy </Link>
                   </li>
                   <li>
-                    <Link>Blogs </Link>
+                    <Link to="/blog">Blogs </Link>
                   </li>
                 </ul>
 
                 <ul className="flex flex-col gap-2 text-slate-600 text-sm font-semibold">
                   <li>
-                    <Link>Our Service </Link>
+                    <Link to="/shops">Our Service </Link>
                   </li>
                   <li>
-                    <Link>Company Profile</Link>
+                    <Link to="/about">Company Profile</Link>
                   </li>
                   <li>
-                    <Link>Delivery Information </Link>
+                    <Link to="/contact">Delivery Information </Link>
                   </li>
                   <li>
-                    <Link>Privacy Policy </Link>
+                    <Link to="/about">Privacy Policy </Link>
                   </li>
                   <li>
-                    <Link>Blogs </Link>
+                    <Link to="/blog">Blogs </Link>
                   </li>
                 </ul>
               </div>
@@ -86,21 +107,41 @@ const Footer = () => {
             <span>
               Get Email updates about tour latest and shop specials offers
             </span>
-            <div className="h-[50px] w-full bg-white border relative">
-              <input
-                className="h-full bg-transparent w-full px-3 outline-0"
-                type="text"
-                placeholder="Enter Your Email"
-              />
-              <button className="h-full absolute right-0 bg-[#059473] text-white uppercase px-4 font-bold text-sm">
-                Subscribe
-              </button>
-            </div>
+            <form onSubmit={subscribe}>
+              <div className="h-[50px] w-full bg-white border relative">
+                <input
+                  className="h-full bg-transparent w-full px-3 outline-0"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter Your Email"
+                />
+                <button
+                  type="submit"
+                  className="h-full absolute right-0 bg-[#059473] text-white uppercase px-4 font-bold text-sm"
+                >
+                  Subscribe
+                </button>
+              </div>
+              {subscribeMsg.text && (
+                <p
+                  className={`mt-2 text-sm font-semibold ${
+                    subscribeMsg.type === "success"
+                      ? "text-[#059473]"
+                      : "text-red-500"
+                  }`}
+                >
+                  {subscribeMsg.text}
+                </p>
+              )}
+            </form>
             <ul className="flex justify-start items-center gap-3">
               <li>
                 <a
                   className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full"
-                  href="#"
+                  href={SOCIAL_LINKS.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <FaFacebookF />{" "}
                 </a>
@@ -109,7 +150,9 @@ const Footer = () => {
               <li>
                 <a
                   className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full"
-                  href="#"
+                  href={SOCIAL_LINKS.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <FaTwitter />{" "}
                 </a>
@@ -117,7 +160,9 @@ const Footer = () => {
               <li>
                 <a
                   className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full"
-                  href="#"
+                  href={SOCIAL_LINKS.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <FaLinkedin />{" "}
                 </a>
@@ -125,7 +170,9 @@ const Footer = () => {
               <li>
                 <a
                   className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-white rounded-full"
-                  href="#"
+                  href={SOCIAL_LINKS.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <FaGithub />{" "}
                 </a>

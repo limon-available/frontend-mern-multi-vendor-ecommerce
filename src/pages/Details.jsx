@@ -24,6 +24,7 @@ import {
   messageClear,
   add_to_wishlist,
 } from "../store/reducers/cardReducer";
+import { SOCIAL_LINKS } from "../config/socialLinks";
 
 const Details = () => {
   const navigate = useNavigate();
@@ -49,6 +50,10 @@ const Details = () => {
       dispatch(messageClear());
     }
   }, [successMessage, errorMessage]);
+
+  const shareUrl = encodeURIComponent(
+    typeof window !== "undefined" ? window.location.href : "",
+  );
 
   const images = [1, 2, 3, 4, 5, 6];
   const [image, setImage] = useState("");
@@ -334,7 +339,9 @@ const Details = () => {
                     <li>
                       <a
                         className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-indigo-500 rounded-full text-white"
-                        href="#"
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         {" "}
                         <FaFacebookF />{" "}
@@ -343,7 +350,9 @@ const Details = () => {
                     <li>
                       <a
                         className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-cyan-500 rounded-full text-white"
-                        href="#"
+                        href={`https://twitter.com/intent/tweet?url=${shareUrl}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         {" "}
                         <FaTwitter />{" "}
@@ -352,7 +361,9 @@ const Details = () => {
                     <li>
                       <a
                         className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-purple-500 rounded-full text-white"
-                        href="#"
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         {" "}
                         <FaLinkedin />{" "}
@@ -361,7 +372,9 @@ const Details = () => {
                     <li>
                       <a
                         className="w-[38px] h-[38px] hover:bg-[#059473] hover:text-white flex justify-center items-center bg-blue-500 rounded-full text-white"
-                        href="#"
+                        href={SOCIAL_LINKS.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                       >
                         {" "}
                         <FaGithub />{" "}
@@ -494,7 +507,7 @@ const Details = () => {
               {relatedProducts.map((p, i) => {
                 return (
                   <SwiperSlide key={i}>
-                    <Link className="block">
+                    <Link to={`/product/details/${p.slug}`} className="block">
                       <div className="relative h-[270px]">
                         <div className="w-full h-full">
                           <img
