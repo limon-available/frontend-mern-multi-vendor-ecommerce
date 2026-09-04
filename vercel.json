@@ -3,6 +3,10 @@
     {
       "source": "/admin/:path*",
       "destination": "https://multi-vendor-dashboard-ecommerce.vercel.app/admin/:path*"
+    },
+    {
+      "source": "/admin-static/:path*",
+      "destination": "https://multi-vendor-dashboard-ecommerce.vercel.app/static/:path*"
     }
   ]
 }
