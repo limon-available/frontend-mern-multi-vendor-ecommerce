@@ -31,10 +31,38 @@ export const customer_login = createAsyncThunk(
     }
 )
 
+export const customer_google_login = createAsyncThunk(
+    'auth/customer_google_login',
+    async(access_token, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/customer/google-login', { access_token }, {
+                withCredentials: true
+            })
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+export const customer_facebook_login = createAsyncThunk(
+    'auth/customer_facebook_login',
+    async(access_token, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/customer/facebook-login', { access_token }, {
+                withCredentials: true
+            })
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
 export const get_user_info = createAsyncThunk(
     'auth/get_user_info',
     async(_ ,{rejectWithValue, fulfillWithValue}) => {
-          
+
         try {
             const {data} = await api.get('/get_user_info',{withCredentials: true})
             return fulfillWithValue(data)
@@ -128,6 +156,30 @@ export const authReducer = createSlice({
             state.successMessage = payload.message;
             state.loader =false;
             state.userInfo =payload.userInfo
+        })
+        .addCase(customer_google_login.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(customer_google_login.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload?.error || "Google sign-in failed";
+        })
+        .addCase(customer_google_login.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+            state.userInfo = payload.userInfo;
+        })
+        .addCase(customer_facebook_login.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(customer_facebook_login.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload?.error || "Facebook sign-in failed";
+        })
+        .addCase(customer_facebook_login.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+            state.userInfo = payload.userInfo;
         })
                     .addCase(logout.fulfilled, (state) => {
                 state.userInfo =null;

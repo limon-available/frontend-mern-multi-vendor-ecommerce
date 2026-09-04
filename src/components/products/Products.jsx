@@ -26,18 +26,18 @@ const Products = ({ title, products }) => {
 
   const ButtonGroup = ({ next, previous }) => {
     return (
-      <div className="flex justify-between items-center">
-        <div className="text-xl font-bold text-slate-600"> {title} </div>
-        <div className="flex justify-center items-center gap-3 text-slate-600">
+      <div className="flex justify-between items-center pb-2 border-b border-slate-100 mb-2">
+        <div className="text-xl font-bold text-slate-800 font-display"> {title} </div>
+        <div className="flex justify-center items-center gap-2 text-slate-600">
           <button
             onClick={() => previous()}
-            className="w-[30px] h-[30px] flex justify-center items-center bg-slate-300 border border-slate-200"
+            className="w-[34px] h-[34px] rounded-full flex justify-center items-center bg-slate-100 hover:bg-[#059473] hover:text-white transition-all"
           >
             <IoIosArrowBack />
           </button>
           <button
             onClick={() => next()}
-            className="w-[30px] h-[30px] flex justify-center items-center bg-slate-300 border border-slate-200"
+            className="w-[34px] h-[34px] rounded-full flex justify-center items-center bg-slate-100 hover:bg-[#059473] hover:text-white transition-all"
           >
             <IoIosArrowForward />
           </button>
@@ -61,15 +61,19 @@ const Products = ({ title, products }) => {
           return (
             <div key={i} className="flex flex-col justify-start gap-2">
               {p.map((pl, j) => (
-                <Link key={j} className="flex justify-start items-start" to="#">
+                <Link
+                  key={j}
+                  className="flex justify-start items-center p-2 rounded-xl hover:bg-slate-50 transition-colors group"
+                  to="#"
+                >
                   <img
-                    className="w-[110px] h-[110px]"
+                    className="w-[110px] h-[110px] rounded-lg object-cover bg-slate-50"
                     src={pl.images[0]}
                     alt=""
                   />
                   <div className="px-3 flex justify-start items-start gap-1 flex-col text-slate-600">
-                    <h2>{pl.name} </h2>
-                    <span className="text-lg font-bold">${pl.price}</span>
+                    <h2 className="font-medium text-slate-800 group-hover:text-[#059473] transition-colors">{pl.name} </h2>
+                    <span className="text-lg font-bold text-[#059473]">${pl.price}</span>
                   </div>
                 </Link>
               ))}

@@ -32,12 +32,12 @@ const Dashboard = () => {
   return (
     <div>
       <Header />
-      <div className="bg-slate-200 mt-5">
+      <div className="bg-slate-100 mt-5">
         <div className="w-[90%] mx-auto md-lg:block hidden">
           <div>
             <button
               onClick={() => setFilterShow(!filterShow)}
-              className="text-center py-3 px-3 bg-green-500 text-white"
+              className="text-center py-3 px-3 rounded-lg bg-gradient-to-r from-[#059473] to-[#047857] text-white shadow-sm"
             >
               <FaList />{" "}
             </button>
@@ -47,10 +47,10 @@ const Dashboard = () => {
         <div className="h-full mx-auto">
           <div className="py-5 flex md-lg:w-[90%] mx-auto relative">
             <div
-              className={`rounded-md z-50 md-lg:absolute ${filterShow ? "-left-4" : "-left-[360px]"} w-[270px] ml-4 bg-white`}
+              className={`rounded-xl shadow-card z-50 md-lg:absolute ${filterShow ? "-left-4" : "-left-[360px]"} w-[270px] ml-4 bg-white`}
             >
-              <ul className="py-2 text-slate-600 px-4">
-                <li className="flex justify-start items-center gap-2 py-2">
+              <ul className="py-3 text-slate-600 px-3 [&_a]:font-medium">
+                <li className="flex justify-start items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-emerald-50 hover:text-[#059473] transition-colors">
                   <span className="text-xl">
                     <IoIosHome />
                   </span>
@@ -58,7 +58,7 @@ const Dashboard = () => {
                     Dashboard{" "}
                   </Link>
                 </li>
-                <li className="flex justify-start items-center gap-2 py-2">
+                <li className="flex justify-start items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-emerald-50 hover:text-[#059473] transition-colors">
                   <span className="text-xl">
                     <FaBorderAll />
                   </span>
@@ -66,7 +66,7 @@ const Dashboard = () => {
                     My Orders{" "}
                   </Link>
                 </li>
-                <li className="flex justify-start items-center gap-2 py-2">
+                <li className="flex justify-start items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-emerald-50 hover:text-[#059473] transition-colors">
                   <span className="text-xl">
                     <FaHeart />
                   </span>
@@ -74,7 +74,7 @@ const Dashboard = () => {
                     Wishlist{" "}
                   </Link>
                 </li>
-                <li className="flex justify-start items-center gap-2 py-2">
+                <li className="flex justify-start items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-emerald-50 hover:text-[#059473] transition-colors">
                   <span className="text-xl">
                     <IoChatbubbleEllipsesSharp />
                   </span>
@@ -82,7 +82,7 @@ const Dashboard = () => {
                     Chat{" "}
                   </Link>
                 </li>
-                <li className="flex justify-start items-center gap-2 py-2">
+                <li className="flex justify-start items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-emerald-50 hover:text-[#059473] transition-colors">
                   <span className="text-xl">
                     <RiLockPasswordLine />
                   </span>
@@ -92,7 +92,7 @@ const Dashboard = () => {
                 </li>
                 <li
                   onClick={handleLogout}
-                  className="flex justify-start items-center gap-2 py-2 cursor-pointer"
+                  className="flex justify-start items-center gap-3 py-2.5 px-3 rounded-lg hover:bg-red-50 hover:text-red-500 transition-colors cursor-pointer"
                 >
                   <span className="text-xl">
                     <IoMdLogOut />

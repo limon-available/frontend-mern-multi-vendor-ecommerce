@@ -28,17 +28,17 @@ const Contact = () => {
   return (
     <div>
       <Header />
-      <section className="bg-[#059473] h-[220px] mt-6 relative">
-        <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
+      <section className="bg-gradient-to-r from-slate-900 via-[#065f46] to-[#059473] h-[220px] mt-6 relative">
+        <div className="absolute left-0 top-0 w-full h-full bg-black/20">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">Contact Us</h2>
-              <div className="flex justify-center items-center gap-2 text-2xl w-full">
-                <Link to="/">Home</Link>
+              <h2 className="text-4xl font-bold font-display">Contact Us</h2>
+              <div className="flex justify-center items-center gap-2 text-xl w-full">
+                <Link to="/" className="hover:text-emerald-300 transition-colors">Home</Link>
                 <span className="pt-1">
                   <IoIosArrowForward />
                 </span>
-                <span>Contact Us</span>
+                <span className="text-emerald-300">Contact Us</span>
               </div>
             </div>
           </div>
@@ -100,7 +100,7 @@ const Contact = () => {
                     required
                     type="text"
                     placeholder="Your Name"
-                    className="w-full border px-3 py-2 outline-0 focus:border-[#059473] rounded"
+                    className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 outline-0 focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                   />
                   <input
                     value={form.email}
@@ -109,7 +109,7 @@ const Contact = () => {
                     required
                     type="email"
                     placeholder="Your Email"
-                    className="w-full border px-3 py-2 outline-0 focus:border-[#059473] rounded"
+                    className="w-full border border-slate-200 bg-slate-50 px-3 py-2.5 outline-0 focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                   />
                 </div>
                 <input
@@ -131,7 +131,7 @@ const Contact = () => {
                 ></textarea>
                 <button
                   type="submit"
-                  className="bg-[#059473] text-white uppercase font-bold px-8 py-3 rounded self-start hover:bg-[#047a5f] transition"
+                  className="bg-gradient-to-r from-[#059473] to-[#047857] text-white uppercase font-bold px-8 py-3 rounded-lg self-start hover:shadow-lg hover:shadow-emerald-500/30 transition-all"
                 >
                   Send Message
                 </button>

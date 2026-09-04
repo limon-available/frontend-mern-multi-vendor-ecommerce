@@ -72,17 +72,17 @@ const Blog = () => {
   return (
     <div>
       <Header />
-      <section className="bg-[#059473] h-[220px] mt-6 relative">
-        <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
+      <section className="bg-gradient-to-r from-slate-900 via-[#065f46] to-[#059473] h-[220px] mt-6 relative">
+        <div className="absolute left-0 top-0 w-full h-full bg-black/20">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">Blog</h2>
-              <div className="flex justify-center items-center gap-2 text-2xl w-full">
-                <Link to="/">Home</Link>
+              <h2 className="text-4xl font-bold font-display">Blog</h2>
+              <div className="flex justify-center items-center gap-2 text-xl w-full">
+                <Link to="/" className="hover:text-emerald-300 transition-colors">Home</Link>
                 <span className="pt-1">
                   <IoIosArrowForward />
                 </span>
-                <span>Blog</span>
+                <span className="text-emerald-300">Blog</span>
               </div>
             </div>
           </div>
@@ -95,13 +95,15 @@ const Blog = () => {
             {posts.map((post) => (
               <div
                 key={post.id}
-                className="bg-white border rounded-md overflow-hidden hover:shadow-md transition flex flex-col"
+                className="bg-white border border-slate-100 shadow-card rounded-2xl overflow-hidden hover:shadow-card-hover hover:-translate-y-1.5 transition-all duration-300 flex flex-col group"
               >
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-[200px] object-cover"
-                />
+                <div className="overflow-hidden">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-[200px] object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
                 <div className="p-5 flex flex-col gap-3 flex-1">
                   <div className="flex items-center gap-4 text-xs text-slate-500">
                     <span className="flex items-center gap-1">
@@ -111,7 +113,7 @@ const Blog = () => {
                       <FaRegCalendarAlt /> {post.date}
                     </span>
                   </div>
-                  <h3 className="font-bold text-lg text-slate-700">
+                  <h3 className="font-bold text-lg text-slate-800 group-hover:text-[#059473] transition-colors">
                     {post.title}
                   </h3>
                   <p className="text-slate-600 text-sm flex-1">

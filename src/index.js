@@ -7,10 +7,13 @@ import { Provider } from 'react-redux';
 import store from './store/index';
 import { Toaster } from 'react-hot-toast';
 import ErrorBoundary from './components/ErrorBoundary';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from './config/app';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ErrorBoundary>
+  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
   <Provider store={store} >
     <Suspense>
     <App />
@@ -25,6 +28,7 @@ root.render(
     />
     </Suspense>
     </Provider>
+  </GoogleOAuthProvider>
   </ErrorBoundary>
 );
 

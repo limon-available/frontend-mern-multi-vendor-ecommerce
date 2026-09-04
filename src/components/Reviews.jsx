@@ -202,7 +202,7 @@ const Reviews = ({ product }) => {
               setPageNumber={setPageNumber}
               totalItem={totalReview}
               parPage={parPage}
-              showItem={Math.floor(totalReview / 3)}
+              showItem={5}
             />
           )}
         </div>

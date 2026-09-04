@@ -15,8 +15,8 @@ const OrderDetails = () => {
   }, [orderId]);
 
   return (
-    <div className="bg-white p-5">
-      <h2 className="text-slate-600 font-semibold">
+    <div className="bg-white p-5 rounded-xl shadow-card">
+      <h2 className="text-slate-800 font-semibold border-b border-slate-100 pb-3 mb-3">
         #{myOrder._id} , <span className="pl-1">{myOrder.date}</span>{" "}
       </h2>
       <div className="grid grid-cols-2 gap-3">
@@ -76,7 +76,7 @@ const OrderDetails = () => {
             <div key={i}>
               <div className="flex gap-5 justify-start items-center text-slate-600">
                 <div className="flex gap-2">
-                  <img className="w-[55px] h-[55px]" src={p.images[0]} alt="" />
+                  <img className="w-[55px] h-[55px] rounded-lg object-cover bg-slate-50 border border-slate-100" src={p.images[0]} alt="" />
                   <div className="flex text-sm flex-col justify-start items-start">
                     <Link to={`/product/details/${p.slug}`}> {p.name} </Link>
                     <p>

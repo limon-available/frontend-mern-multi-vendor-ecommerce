@@ -106,7 +106,7 @@ const Chat = () => {
   }, [fb_messages]);
 
   return (
-    <div className="bg-white p-3 rounded-md">
+    <div className="bg-white p-3 rounded-xl shadow-card">
       <div className="w-full flex">
         <div
           className={`w-[230px] md-lg:absolute bg-white md-lg:h-full -left-[350px] ${show ? "-left-0" : "-left-[350px]"}`}
@@ -122,14 +122,14 @@ const Chat = () => {
               <Link
                 to={`/dashboard/chat/${f.fdId}`}
                 key={i}
-                className={`flex gap-2 justify-start items-center pl-2 py-[5px]`}
+                className={`flex gap-2 justify-start items-center pl-2 py-2 rounded-lg hover:bg-emerald-50 transition-colors`}
               >
-                <div className="w-[30px] h-[30px] rounded-full relative">
+                <div className="w-[34px] h-[34px] rounded-full relative">
                   {activeSeller.some((c) => c.sellerId === f.fdId) && (
-                    <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute right-0 bottom-0"></div>
+                    <div className="w-[10px] h-[10px] rounded-full bg-green-500 border-2 border-white absolute right-0 bottom-0 z-10"></div>
                   )}
 
-                  <img src={f.image} alt="" />
+                  <img src={f.image} className="w-full h-full rounded-full object-cover border border-slate-200" alt="" />
                 </div>
                 <span>{f.name}</span>
               </Link>
@@ -142,13 +142,13 @@ const Chat = () => {
             <div className="w-full h-full">
               <div className="flex justify-between gap-3 items-center text-slate-600 text-xl h-[50px]">
                 <div className="flex gap-2">
-                  <div className="w-[30px] h-[30px] rounded-full relative">
+                  <div className="w-[34px] h-[34px] rounded-full relative">
                     {activeSeller.some(
                       (c) => c.sellerId === currentFd.fdId,
                     ) && (
-                      <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute right-0 bottom-0"></div>
+                      <div className="w-[10px] h-[10px] rounded-full bg-green-500 border-2 border-white absolute right-0 bottom-0 z-10"></div>
                     )}
-                    <img src={currentFd.image} />
+                    <img src={currentFd.image} className="w-full h-full rounded-full object-cover border border-slate-200" />
                   </div>
                   <span>{currentFd.name}</span>
                 </div>

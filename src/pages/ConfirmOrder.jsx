@@ -77,7 +77,7 @@ const ConfirmOrder = () => {
         <>
           <img src={error} alt="" />
           <Link
-            className="px-5 py-2 bg-green-500 rounded-sm text-white"
+            className="px-6 py-2.5 bg-gradient-to-r from-[#059473] to-[#047857] hover:shadow-lg hover:shadow-emerald-500/30 rounded-lg font-semibold text-white transition-all"
             to="/dashboard/my-orders"
           >
             Back to Dashboard{" "}
@@ -90,7 +90,7 @@ const ConfirmOrder = () => {
           <>
             <img src={success} alt="" />
             <Link
-              className="px-5 py-2 bg-green-500 rounded-sm text-white"
+              className="px-6 py-2.5 bg-gradient-to-r from-[#059473] to-[#047857] hover:shadow-lg hover:shadow-emerald-500/30 rounded-lg font-semibold text-white transition-all"
               to="/dashboard/my-orders"
             >
               Back to Dashboard{" "}

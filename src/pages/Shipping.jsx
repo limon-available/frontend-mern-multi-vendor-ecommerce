@@ -65,29 +65,29 @@ const Shipping = () => {
         className="h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left"
         style={{ backgroundImage: 'url("/images/banner/shop.png")' }}
       >
-        <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
+        <div className="absolute left-0 top-0 w-full h-full bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-[#059473]/50">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">Shipping Page </h2>
-              <div className="flex justify-center items-center gap-2 text-2xl w-full">
-                <Link to="/">Home</Link>
+              <h2 className="text-4xl font-bold font-display">Shipping Page </h2>
+              <div className="flex justify-center items-center gap-2 text-xl w-full">
+                <Link to="/" className="hover:text-emerald-300 transition-colors">Home</Link>
                 <span className="pt-1">
                   <IoIosArrowForward />
                 </span>
-                <span>Shipping </span>
+                <span className="text-emerald-300">Shipping </span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#eeeeee]">
+      <section className="bg-slate-100">
         <div className="w-[85%] lg:w-[90%] md:w-[90%] sm:w-[90%] mx-auto py-16">
           <div className="w-full flex flex-wrap">
             <div className="w-[67%] md-lg:w-full">
               <div className="flex flex-col gap-3">
-                <div className="bg-white p-6 shadow-sm rounded-md">
-                  <h2 className="text-slate-600 font-bold pb-3">
+                <div className="bg-white p-6 shadow-card rounded-xl">
+                  <h2 className="text-slate-800 font-bold pb-3 text-lg font-display border-b border-slate-100 mb-3">
                     Shipping Information{" "}
                   </h2>
 
@@ -101,7 +101,7 @@ const Shipping = () => {
                               onChange={inputHandle}
                               value={state.name}
                               type="text"
-                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md"
+                              className="w-full px-3 py-2.5 border border-slate-200 bg-slate-50 outline-none focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                               name="name"
                               id="name"
                               placeholder="Name"
@@ -114,7 +114,7 @@ const Shipping = () => {
                               onChange={inputHandle}
                               value={state.address}
                               type="text"
-                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md"
+                              className="w-full px-3 py-2.5 border border-slate-200 bg-slate-50 outline-none focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                               name="address"
                               id="address"
                               placeholder="Address"
@@ -129,7 +129,7 @@ const Shipping = () => {
                               onChange={inputHandle}
                               value={state.phone}
                               type="text"
-                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md"
+                              className="w-full px-3 py-2.5 border border-slate-200 bg-slate-50 outline-none focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                               name="phone"
                               id="phone"
                               placeholder="Phone"
@@ -142,7 +142,7 @@ const Shipping = () => {
                               onChange={inputHandle}
                               value={state.post}
                               type="text"
-                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md"
+                              className="w-full px-3 py-2.5 border border-slate-200 bg-slate-50 outline-none focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                               name="post"
                               id="post"
                               placeholder="Post"
@@ -157,7 +157,7 @@ const Shipping = () => {
                               onChange={inputHandle}
                               value={state.province}
                               type="text"
-                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md"
+                              className="w-full px-3 py-2.5 border border-slate-200 bg-slate-50 outline-none focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                               name="province"
                               id="province"
                               placeholder="Province"
@@ -170,7 +170,7 @@ const Shipping = () => {
                               onChange={inputHandle}
                               value={state.city}
                               type="text"
-                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md"
+                              className="w-full px-3 py-2.5 border border-slate-200 bg-slate-50 outline-none focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                               name="city"
                               id="city"
                               placeholder="City"
@@ -185,7 +185,7 @@ const Shipping = () => {
                               onChange={inputHandle}
                               value={state.area}
                               type="text"
-                              className="w-full px-3 py-2 border border-slate-200 outline-none focus:border-green-500 rounded-md"
+                              className="w-full px-3 py-2.5 border border-slate-200 bg-slate-50 outline-none focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 focus:bg-white transition-all rounded-lg"
                               name="area"
                               id="area"
                               placeholder="Area"
@@ -193,7 +193,7 @@ const Shipping = () => {
                           </div>
 
                           <div className="flex flex-col gap-1 mt-7 mb-2 w-full">
-                            <button className="px-3 py-[6px] rounded-sm hover:shadow-green-500/50 hover:shadow-lg bg-green-500 text-white">
+                            <button className="px-3 py-2.5 rounded-lg font-semibold hover:shadow-green-500/40 hover:shadow-lg bg-gradient-to-r from-[#059473] to-[#047857] text-white transition-all">
                               Save Change{" "}
                             </button>
                           </div>
@@ -232,9 +232,9 @@ const Shipping = () => {
                 </div>
 
                 {products.map((p, i) => (
-                  <div key={i} className="flex bg-white p-4 flex-col gap-2">
+                  <div key={i} className="flex bg-white p-4 rounded-xl shadow-card flex-col gap-2">
                     <div className="flex justify-start items-center">
-                      <h2 className="text-md text-slate-600 font-bold">
+                      <h2 className="text-md text-slate-800 font-bold">
                         {p.shopName}
                       </h2>
                     </div>
@@ -244,7 +244,7 @@ const Shipping = () => {
                         <div className="flex sm:w-full gap-2 w-7/12">
                           <div className="flex gap-2 justify-start items-center">
                             <img
-                              className="w-[80px] h-[80px]"
+                              className="w-[80px] h-[80px] rounded-lg object-cover bg-slate-50 border border-slate-100"
                               src={pt.productInfo.images[0]}
                               alt=""
                             />
@@ -285,8 +285,8 @@ const Shipping = () => {
 
             <div className="w-[33%] md-lg:w-full">
               <div className="pl-3 md-lg:pl-0 md-lg:mt-5">
-                <div className="bg-white p-3 text-slate-600 flex flex-col gap-3">
-                  <h2 className="text-xl font-bold">Order Summary</h2>
+                <div className="bg-white p-5 rounded-xl shadow-card text-slate-600 flex flex-col gap-3 sticky top-4">
+                  <h2 className="text-xl font-bold text-slate-800 font-display border-b border-slate-100 pb-3">Order Summary</h2>
                   <div className="flex justify-between items-center">
                     <span>Items Total (items) </span>
                     <span>${price}</span>
@@ -310,7 +310,7 @@ const Shipping = () => {
                   <button
                     onClick={placeOrder}
                     disabled={res ? false : true}
-                    className={`px-5 py-[6px] rounded-sm hover:shadow-red-500/50 hover:shadow-lg ${res ? "bg-red-500" : "bg-red-300"}  text-sm text-white uppercase`}
+                    className={`px-5 py-[10px] rounded-lg font-semibold hover:shadow-lg transition-all ${res ? "bg-gradient-to-r from-[#059473] to-[#047857] hover:shadow-emerald-500/40" : "bg-slate-300 cursor-not-allowed"}  text-sm text-white uppercase`}
                   >
                     Place Order
                   </button>

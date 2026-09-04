@@ -70,47 +70,47 @@ const ShopProducts = ({ styles, products }) => {
       {products.map((p, i) => (
         <div
           key={i}
-          className={`flex transition-all duration-1000 hover:shadow-md hover:-translate-y-3 ${styles === "grid" ? "flex-col justify-start items-start" : "justify-start items-center md-lg:flex-col md-lg:justify-start md-lg:items-start"} w-full gap-4 bg-white p-1 rounded-md`}
+          className={`flex transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1.5 border border-slate-100 shadow-card ${styles === "grid" ? "flex-col justify-start items-start" : "justify-start items-center md-lg:flex-col md-lg:justify-start md-lg:items-start"} w-full gap-4 bg-white p-3 rounded-2xl group`}
         >
           <div
             className={
               styles === "grid"
-                ? "w-full relative group h-[210px] md:h-[270px] xs:h-[170px] overflow-hidden"
-                : "md-lg:w-full relative group h-[210px] md:h-[270px] overflow-hidden"
+                ? "w-full relative group h-[210px] md:h-[270px] xs:h-[170px] overflow-hidden rounded-xl bg-slate-50"
+                : "md-lg:w-full relative group h-[210px] md:h-[270px] overflow-hidden rounded-xl bg-slate-50"
             }
           >
             <img
-              className="h-[240px] rounded-md md:h-[270px] xs:h-[170px] w-full object-cover"
+              className="h-[240px] rounded-xl md:h-[270px] xs:h-[170px] w-full object-cover transition-transform duration-500 group-hover:scale-105"
               src={p.images[0]}
               alt=""
             />
 
-            <ul className="flex transition-all duration-700 -bottom-10 justify-center items-center gap-2 absolute w-full group-hover:bottom-3">
+            <ul className="flex transition-all duration-500 -bottom-12 justify-center items-center gap-2 absolute w-full group-hover:bottom-3">
               <li
                 onClick={() => add_wishlist(p)}
-                className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all"
+                className="w-[40px] h-[40px] cursor-pointer bg-white shadow-md flex justify-center items-center rounded-full text-slate-600 hover:bg-[#059473] hover:text-white hover:scale-110 transition-all"
               >
                 <FaRegHeart />
               </li>
               <Link
                 to={`/product/details/${p.slug}`}
-                className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all"
+                className="w-[40px] h-[40px] cursor-pointer bg-white shadow-md flex justify-center items-center rounded-full text-slate-600 hover:bg-[#059473] hover:text-white hover:scale-110 transition-all"
               >
                 <FaEye />
               </Link>
               <li
                 onClick={() => add_card(p._id)}
-                className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all"
+                className="w-[40px] h-[40px] cursor-pointer bg-white shadow-md flex justify-center items-center rounded-full text-slate-600 hover:bg-[#059473] hover:text-white hover:scale-110 transition-all"
               >
                 <RiShoppingCartLine />
               </li>
             </ul>
           </div>
 
-          <div className="flex justify-start items-start flex-col gap-1">
-            <h2 className="font-bold">{p.name}</h2>
+          <div className="flex justify-start items-start flex-col gap-1 px-1 pb-1 w-full">
+            <h2 className="font-semibold text-slate-800 truncate w-full">{p.name}</h2>
             <div className="flex justify-start items-center gap-3">
-              <span className="text-md font-semibold">${p.price}</span>
+              <span className="text-md font-bold text-[#059473]">${p.price}</span>
               <div className="flex">
                 <Rating ratings={p.rating} />
               </div>
