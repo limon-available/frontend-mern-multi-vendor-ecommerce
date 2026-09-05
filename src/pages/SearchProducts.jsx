@@ -18,8 +18,6 @@ const SearchProducts = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const category = searchParams.get("category");
   const searchValue = searchParams.get("value");
-  console.log("category:", category);
-  console.log("searchValue:", searchValue);
 
   const dispatch = useDispatch();
   const {
@@ -93,22 +91,30 @@ const SearchProducts = () => {
     setRating(0);
     setPageNumber(1);
   };
-  console.log(priceRange);
-  console.log(state.values);
   return (
     <div>
       <Header />
-      <section className='bg-[url("http://localhost:3000/images/banner/shop.png")] h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left'>
-        <div className="absolute left-0 top-0 w-full h-full bg-[#2422228a]">
+      <section
+        className="h-[220px] mt-6 bg-cover bg-no-repeat relative bg-left"
+        style={{ backgroundImage: 'url("/images/banner/shop.png")' }}
+      >
+        <div className="absolute left-0 top-0 w-full h-full bg-gradient-to-r from-slate-900/80 via-slate-900/60 to-[#059473]/50">
           <div className="w-[85%] md:w-[80%] sm:w-[90%] lg:w-[90%] h-full mx-auto">
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
-              <h2 className="text-3xl font-bold">Category Page </h2>
-              <div className="flex justify-center items-center gap-2 text-2xl w-full">
-                <Link to="/">Home</Link>
+              <h2 className="text-4xl font-bold font-display">
+                Category Page{" "}
+              </h2>
+              <div className="flex justify-center items-center gap-2 text-xl w-full">
+                <Link
+                  to="/"
+                  className="hover:text-emerald-300 transition-colors"
+                >
+                  Home
+                </Link>
                 <span className="pt-1">
                   <IoIosArrowForward />
                 </span>
-                <span>Category </span>
+                <span className="text-emerald-300">Category </span>
               </div>
             </div>
           </div>
@@ -120,7 +126,7 @@ const SearchProducts = () => {
           <div className={` md:block hidden ${!filter ? "mb-6" : "mb-0"} `}>
             <button
               onClick={() => setFilter(!filter)}
-              className="text-center w-full py-2 px-3 bg-indigo-500 text-white"
+              className="text-center w-full py-2.5 px-3 rounded-lg font-semibold bg-gradient-to-r from-[#059473] to-[#047857] text-white shadow-sm hover:shadow-lg transition-all"
             >
               Filter Product
             </button>
@@ -131,7 +137,7 @@ const SearchProducts = () => {
               className={`w-3/12 md-lg:w-4/12 md:w-full pr-8 ${filter ? "md:h-0 md:overflow-hidden md:mb-6" : "md:h-auto md:overflow-auto md:mb-0"} `}
             >
               <div className="py-2 flex flex-col gap-5">
-                <h2 className="text-3xl font-bold mb-3 text-slate-600">
+                <h2 className="text-xl font-bold mb-3 text-slate-800 font-display">
                   Price
                 </h2>
 
@@ -159,12 +165,16 @@ const SearchProducts = () => {
                       {children}
                     </div>
                   )}
-                  renderThumb={({ props }) => (
-                    <div
-                      className="w-[15px] h-[15px] bg-[#059473] rounded-full"
-                      {...props}
-                    />
-                  )}
+                  renderThumb={({ props }) => {
+                    const { key, ...rest } = props;
+                    return (
+                      <div
+                        key={key}
+                        className="w-[15px] h-[15px] bg-[#059473] rounded-full"
+                        {...rest}
+                      />
+                    );
+                  }}
                 />
                 <div>
                   <span className="text-slate-800 font-bold text-lg">
@@ -175,7 +185,7 @@ const SearchProducts = () => {
               </div>
 
               <div className="py-3 flex flex-col gap-4">
-                <h2 className="text-3xl font-bold mb-3 text-slate-600">
+                <h2 className="text-xl font-bold mb-3 text-slate-800 font-display">
                   Rating{" "}
                 </h2>
                 <div className="flex flex-col gap-3">
@@ -183,23 +193,26 @@ const SearchProducts = () => {
                     <div
                       key={r}
                       onClick={() => {
-                        console.log("clicked", r);
                         setRating(r);
                       }}
                       className={`border p-3 cursor-pointer ${
                         rating === r ? "bg-gray-200" : ""
                       }`}
                     >
-                      <div className="flex flex-center gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i}>
-                            {i < r ? (
-                              <AiFillStar className={"text-orange-500"} />
-                            ) : (
-                              <CiStar className={"text-gray-200"} />
-                            )}
-                          </span>
-                        ))}
+                      <div className="flex flex-row items-center gap-1">
+                        {[...Array(5)].map((_, i) =>
+                          i < r ? (
+                            <AiFillStar
+                              key={i}
+                              className="shrink-0 text-orange-500"
+                            />
+                          ) : (
+                            <CiStar
+                              key={i}
+                              className="shrink-0 text-gray-200"
+                            />
+                          ),
+                        )}
                       </div>
                     </div>
                   ))}
@@ -207,10 +220,10 @@ const SearchProducts = () => {
                   {/* reset option */}
                   <div
                     onClick={resetRating}
-                    className="text-orange-500 flex gap-2 text-xl cursor-pointer"
+                    className="text-orange-500 flex flex-row items-center gap-2 text-xl cursor-pointer"
                   >
                     {[...Array(5)].map((_, i) => (
-                      <CiStar key={i} />
+                      <CiStar key={i} className="shrink-0" />
                     ))}
                   </div>
                 </div>
@@ -223,15 +236,15 @@ const SearchProducts = () => {
 
             <div className="w-9/12 md-lg:w-8/12 md:w-full">
               <div className="pl-8 md:pl-0">
-                <div className="py-4 bg-white mb-10 px-3 rounded-md flex justify-between items-start border">
-                  <h2 className="text-lg font-medium text-slate-600">
+                <div className="py-4 bg-white mb-10 px-4 rounded-xl shadow-card flex justify-between items-center border border-slate-100">
+                  <h2 className="text-lg font-semibold text-slate-800">
                     {" "}
                     ({totalProduct}) Products{" "}
                   </h2>
                   <div className="flex justify-center items-center gap-3">
                     <select
                       onChange={(e) => setSortPrice(e.target.value)}
-                      className="p-1 border outline-0 text-slate-600 font-semibold"
+                      className="p-2 border border-slate-200 rounded-lg outline-0 text-slate-600 font-semibold focus:border-[#059473] focus:ring-2 focus:ring-emerald-100 transition-all"
                       name=""
                       id=""
                     >
@@ -239,16 +252,16 @@ const SearchProducts = () => {
                       <option value="low-to-high">Low to High Price</option>
                       <option value="high-to-low">High to Low Price </option>
                     </select>
-                    <div className="flex justify-center items-start gap-4 md-lg:hidden">
+                    <div className="flex justify-center items-start gap-2 md-lg:hidden">
                       <div
                         onClick={() => setStyles("grid")}
-                        className={`p-2 ${styles === "grid" && "bg-slate-300"} text-slate-600 hover:bg-slate-300 cursor-pointer rounded-sm `}
+                        className={`p-2.5 ${styles === "grid" ? "bg-[#059473] text-white" : "bg-slate-100 text-slate-600"} hover:bg-[#059473] hover:text-white cursor-pointer rounded-lg transition-all `}
                       >
                         <BsFillGridFill />
                       </div>
                       <div
                         onClick={() => setStyles("list")}
-                        className={`p-2 ${styles === "list" && "bg-slate-300"} text-slate-600 hover:bg-slate-300 cursor-pointer rounded-sm `}
+                        className={`p-2.5 ${styles === "list" ? "bg-[#059473] text-white" : "bg-slate-100 text-slate-600"} hover:bg-[#059473] hover:text-white cursor-pointer rounded-lg transition-all `}
                       >
                         <FaThList />
                       </div>
@@ -267,7 +280,7 @@ const SearchProducts = () => {
                       setPageNumber={setPageNumber}
                       totalItem={totalProduct}
                       parPage={parPage}
-                      showItem={Math.ceil(totalProduct / parPage)}
+                      showItem={5}
                     />
                   )}
                 </div>

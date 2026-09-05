@@ -5,8 +5,7 @@ export const add_to_card = createAsyncThunk(
     'card/add_to_card',
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.post('/home/product/add-to-card',info) 
-            console.log(data)
+            const {data} = await api.post('/home/product/add-to-card',info)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -20,9 +19,7 @@ export const get_card_products = createAsyncThunk(
     'card/get_card_products',
     async(userId, { rejectWithValue,fulfillWithValue }) => {
         try {
-            console.log("userId",userId)
-            const {data} = await api.get(`/home/product/get-card-product/${userId}`) 
-             console.log("in get_card_products",data)
+            const {data} = await api.get(`/home/product/get-card-product/${userId}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -35,8 +32,7 @@ export const delete_card_product = createAsyncThunk(
     'card/delete_card_product',
     async(card_id, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.delete(`/home/product/delete-card-product/${card_id}`) 
-            // console.log(data)
+            const {data} = await api.delete(`/home/product/delete-card-product/${card_id}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -49,8 +45,7 @@ export const quantity_inc = createAsyncThunk(
     'card/quantity_inc',
     async(card_id, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.put(`/home/product/quantity-inc/${card_id}`) 
-            // console.log(data)
+            const {data} = await api.put(`/home/product/quantity-inc/${card_id}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -64,8 +59,7 @@ export const quantity_dec = createAsyncThunk(
     'card/quantity_dec',
     async(card_id, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.put(`/home/product/quantity-dec/${card_id}`) 
-            // console.log(data)
+            const {data} = await api.put(`/home/product/quantity-dec/${card_id}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -79,8 +73,7 @@ export const add_to_wishlist = createAsyncThunk(
     'wishlist/add_to_wishlist',
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.post('/home/product/add-to-wishlist',info) 
-            // console.log(data)
+            const {data} = await api.post('/home/product/add-to-wishlist',info)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -93,8 +86,7 @@ export const get_wishlist_products = createAsyncThunk(
     'wishlist/get_wishlist_products',
     async(userId, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.get(`/home/product/get-wishlist-products/${userId}`) 
-            // console.log(data)
+            const {data} = await api.get(`/home/product/get-wishlist-products/${userId}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -108,8 +100,7 @@ export const remove_wishlist = createAsyncThunk(
     'wishlist/remove_wishlist',
     async(wishlistId, { rejectWithValue,fulfillWithValue }) => {
         try {
-            const {data} = await api.delete(`/home/product/remove-wishlist-product/${wishlistId}`) 
-            // console.log(data)
+            const {data} = await api.delete(`/home/product/remove-wishlist-product/${wishlistId}`)
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)

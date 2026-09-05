@@ -21,7 +21,7 @@ const FeatureProducts = ({ products }) => {
     if (userInfo) {
       dispatch(
         add_to_card({
-          userId: userInfo.id,
+          userId: userInfo._id,
           quantity: 1,
           productId: id,
         }),
@@ -45,7 +45,7 @@ const FeatureProducts = ({ products }) => {
   const add_wishlist = (pro) => {
     dispatch(
       add_to_wishlist({
-        userId: userInfo.id,
+        userId: userInfo._id,
         productId: pro._id,
         name: pro.name,
         price: pro.price,
@@ -60,9 +60,12 @@ const FeatureProducts = ({ products }) => {
   return (
     <div className="w-[85%] flex flex-wrap mx-auto">
       <div className="w-full">
-        <div className="text-center flex justify-center items-center flex-col text-4xl text-slate-600 font-bold relative pb-[45px]">
-          <h2>Feature Products </h2>
-          <div className="w-[100px] h-[2px] bg-[#059473] mt-4"></div>
+        <div className="text-center flex justify-center items-center flex-col text-4xl md:text-3xl text-slate-800 font-bold relative pb-[45px]">
+          <span className="text-xs font-bold tracking-[0.25em] uppercase text-[#059473] mb-2">
+            Handpicked for you
+          </span>
+          <h2 className="font-display">Feature Products</h2>
+          <div className="w-[90px] h-[3px] bg-gradient-to-r from-[#059473] to-emerald-400 rounded-full mt-4"></div>
         </div>
       </div>
 
@@ -70,11 +73,11 @@ const FeatureProducts = ({ products }) => {
         {products.map((p, i) => (
           <div
             key={i}
-            className="border group transition-all duration-500 hover:shadow-md hover:-mt-3"
+            className="group bg-white rounded-2xl border border-slate-100 shadow-card overflow-hidden transition-all duration-300 hover:shadow-card-hover hover:-translate-y-1.5"
           >
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden bg-slate-50">
               {p.discount ? (
-                <div className="flex justify-center items-center absolute text-white w-[38px] h-[38px] rounded-full bg-red-500 font-semibold text-xs left-2 top-2">
+                <div className="flex justify-center items-center absolute z-10 text-white w-[42px] h-[42px] rounded-full bg-gradient-to-br from-red-500 to-rose-600 shadow-lg font-bold text-xs left-3 top-3">
                   {p.discount}%{" "}
                 </div>
               ) : (
@@ -82,37 +85,37 @@ const FeatureProducts = ({ products }) => {
               )}
 
               <img
-                className="sm:w-full w-full h-[240px]"
+                className="sm:w-full w-full h-[240px] object-cover transition-transform duration-500 group-hover:scale-105"
                 src={p.images[0]}
                 alt=""
               />
 
-              <ul className="flex transition-all duration-700 -bottom-10 justify-center items-center gap-2 absolute w-full group-hover:bottom-3">
+              <ul className="flex transition-all duration-500 -bottom-12 justify-center items-center gap-2 absolute w-full group-hover:bottom-3">
                 <li
                   onClick={() => add_wishlist(p)}
-                  className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all"
+                  className="w-[40px] h-[40px] cursor-pointer bg-white shadow-md flex justify-center items-center rounded-full text-slate-600 hover:bg-[#059473] hover:text-white hover:scale-110 transition-all"
                 >
                   <FaRegHeart />
                 </li>
                 <Link
                   to={`/product/details/${p.slug}`}
-                  className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all"
+                  className="w-[40px] h-[40px] cursor-pointer bg-white shadow-md flex justify-center items-center rounded-full text-slate-600 hover:bg-[#059473] hover:text-white hover:scale-110 transition-all"
                 >
                   <FaEye />
                 </Link>
                 <li
                   onClick={() => add_card(p._id)}
-                  className="w-[38px] h-[38px] cursor-pointer bg-white flex justify-center items-center rounded-full hover:bg-[#059473] hover:text-white hover:rotate-[720deg] transition-all"
+                  className="w-[40px] h-[40px] cursor-pointer bg-white shadow-md flex justify-center items-center rounded-full text-slate-600 hover:bg-[#059473] hover:text-white hover:scale-110 transition-all"
                 >
                   <RiShoppingCartLine />
                 </li>
               </ul>
             </div>
 
-            <div className="py-3 text-slate-600 px-2">
-              <h2 className="font-bold">{p.name} </h2>
-              <div className="flex justify-start items-center gap-3">
-                <span className="text-md font-semibold">${p.price}</span>
+            <div className="py-4 text-slate-600 px-4">
+              <h2 className="font-semibold text-slate-800 truncate">{p.name} </h2>
+              <div className="flex justify-between items-center gap-3 mt-2">
+                <span className="text-lg font-bold text-[#059473]">${p.price}</span>
                 <div className="flex">
                   <Rating ratings={p.rating} />
                 </div>

@@ -7,14 +7,26 @@ export const customer_register = createAsyncThunk(
     async(info, { rejectWithValue,fulfillWithValue }) => {
         try {
             const {data} = await api.post('/customer/customer-register',info)
-            
-           // console.log(data)
+
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
         }
     }
 )
+
+export const seller_register = createAsyncThunk(
+    'auth/seller_register',
+    async(info, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/auth/seller-register', info)
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
 // End Method 
 
 export const customer_login = createAsyncThunk(
@@ -24,8 +36,35 @@ export const customer_login = createAsyncThunk(
             const { data } = await api.post('/customer/customer-login', info, {
                 withCredentials:true
             })
-            
-           // console.log(data) 
+
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+export const customer_google_login = createAsyncThunk(
+    'auth/customer_google_login',
+    async(access_token, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/customer/google-login', { access_token }, {
+                withCredentials: true
+            })
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
+export const customer_facebook_login = createAsyncThunk(
+    'auth/customer_facebook_login',
+    async(access_token, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/customer/facebook-login', { access_token }, {
+                withCredentials: true
+            })
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -36,13 +75,12 @@ export const customer_login = createAsyncThunk(
 export const get_user_info = createAsyncThunk(
     'auth/get_user_info',
     async(_ ,{rejectWithValue, fulfillWithValue}) => {
-          
+
         try {
             const {data} = await api.get('/get_user_info',{withCredentials: true})
-             console.log(data)            
             return fulfillWithValue(data)
         } catch (error) {
-            // console.log(error.response.data)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error.response.data)
         }
     }
@@ -62,13 +100,10 @@ const decodeToken = (token) => {
         async(_,{rejectWithValue, fulfillWithValue}) => {
              
             try {
-
-      console.log("API CALLING..."); 
-                const { data } = await api.get('/logout', { withCredentials: true })    
-                console.log("data", data);
+                const { data } = await api.get('/logout', { withCredentials: true })
                 return fulfillWithValue(data)
             } catch (error) {
-             console.log(error)
+                if (process.env.NODE_ENV !== 'production') console.error(error)
                 return rejectWithValue(error.response.data)
             }
         }
@@ -110,6 +145,17 @@ export const authReducer = createSlice({
             state.loader = false;
             state.userInfo = payload.userInfo
         })
+        .addCase(seller_register.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(seller_register.rejected, (state, { payload }) => {
+            state.errorMessage = payload?.error || "Registration failed";
+            state.loader = false;
+        })
+        .addCase(seller_register.fulfilled, (state, { payload }) => {
+            state.successMessage = payload.message;
+            state.loader = false;
+        })
         .addCase(get_user_info.pending, (state) => {
             state.userLoaded = false;
             state.loader = true;
@@ -131,10 +177,33 @@ export const authReducer = createSlice({
             state.loader =false;
         })
         .addCase(customer_login.fulfilled, (state, { payload }) => {
-            console.log("payload",payload)
             state.successMessage = payload.message;
             state.loader =false;
             state.userInfo =payload.userInfo
+        })
+        .addCase(customer_google_login.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(customer_google_login.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload?.error || "Google sign-in failed";
+        })
+        .addCase(customer_google_login.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+            state.userInfo = payload.userInfo;
+        })
+        .addCase(customer_facebook_login.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(customer_facebook_login.rejected, (state, { payload }) => {
+            state.loader = false;
+            state.errorMessage = payload?.error || "Facebook sign-in failed";
+        })
+        .addCase(customer_facebook_login.fulfilled, (state, { payload }) => {
+            state.loader = false;
+            state.successMessage = payload.message;
+            state.userInfo = payload.userInfo;
         })
                     .addCase(logout.fulfilled, (state) => {
                 state.userInfo =null;

@@ -6,12 +6,17 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './store/index';
 import { Toaster } from 'react-hot-toast';
+import ErrorBoundary from './components/ErrorBoundary';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GOOGLE_CLIENT_ID } from './config/app';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  <ErrorBoundary>
+  <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
   <Provider store={store} >
     <Suspense>
-    <App /> 
+    <App />
     <Toaster
       toastOptions={{
         position : 'top-right',
@@ -19,10 +24,12 @@ root.render(
           background : '#283046',
           color : 'white'
         }
-      }} 
+      }}
     />
     </Suspense>
     </Provider>
+  </GoogleOAuthProvider>
+  </ErrorBoundary>
 );
 
 // If you want to start measuring performance in your app, pass a function

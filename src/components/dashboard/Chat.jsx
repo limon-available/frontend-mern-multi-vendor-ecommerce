@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import {
   add_friend,
+  get_friends,
   messageClear,
   send_message,
   updateMessage,
@@ -29,25 +30,38 @@ const Chat = () => {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (userInfo?.id) {
-      socket.emit("add_user", userInfo.id, userInfo);
+    if (userInfo?._id) {
+      socket.emit("add_user", userInfo._id, userInfo);
+    }
+  }, [userInfo]);
+
+  // Load the conversation list as soon as the customer is known, so the
+  // sidebar is populated even on /dashboard/chat with no seller selected.
+  useEffect(() => {
+    if (userInfo?._id) {
+      dispatch(get_friends());
     }
   }, [userInfo]);
 
   useEffect(() => {
-    dispatch(
-      add_friend({
-        sellerId: sellerId || "",
-        userId: userInfo.id,
-      }),
-    );
-  }, [sellerId]);
+    // Only fetch a conversation once a seller is actually selected. On the
+    // bare /dashboard/chat route there is no :sellerId param, so dispatching
+    // here would POST an empty sellerId and fail backend validation.
+    if (userInfo?._id && sellerId) {
+      dispatch(
+        add_friend({
+          sellerId,
+          userId: userInfo._id,
+        }),
+      );
+    }
+  }, [sellerId, userInfo]);
 
   const send = () => {
     if (text) {
       dispatch(
         send_message({
-          userId: userInfo.id,
+          userId: userInfo._id,
           text,
           sellerId,
           name: userInfo.name,
@@ -77,7 +91,7 @@ const Chat = () => {
     if (receverMessage) {
       if (
         sellerId === receverMessage.senderId &&
-        userInfo.id === receverMessage.receverId
+        userInfo._id === receverMessage.receverId
       ) {
         dispatch(updateMessage(receverMessage));
       } else {
@@ -92,7 +106,7 @@ const Chat = () => {
   }, [fb_messages]);
 
   return (
-    <div className="bg-white p-3 rounded-md">
+    <div className="bg-white p-3 rounded-xl shadow-card">
       <div className="w-full flex">
         <div
           className={`w-[230px] md-lg:absolute bg-white md-lg:h-full -left-[350px] ${show ? "-left-0" : "-left-[350px]"}`}
@@ -108,14 +122,14 @@ const Chat = () => {
               <Link
                 to={`/dashboard/chat/${f.fdId}`}
                 key={i}
-                className={`flex gap-2 justify-start items-center pl-2 py-[5px]`}
+                className={`flex gap-2 justify-start items-center pl-2 py-2 rounded-lg hover:bg-emerald-50 transition-colors`}
               >
-                <div className="w-[30px] h-[30px] rounded-full relative">
+                <div className="w-[34px] h-[34px] rounded-full relative">
                   {activeSeller.some((c) => c.sellerId === f.fdId) && (
-                    <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute right-0 bottom-0"></div>
+                    <div className="w-[10px] h-[10px] rounded-full bg-green-500 border-2 border-white absolute right-0 bottom-0 z-10"></div>
                   )}
 
-                  <img src={f.image} alt="" />
+                  <img src={f.image} className="w-full h-full rounded-full object-cover border border-slate-200" alt="" />
                 </div>
                 <span>{f.name}</span>
               </Link>
@@ -128,13 +142,13 @@ const Chat = () => {
             <div className="w-full h-full">
               <div className="flex justify-between gap-3 items-center text-slate-600 text-xl h-[50px]">
                 <div className="flex gap-2">
-                  <div className="w-[30px] h-[30px] rounded-full relative">
+                  <div className="w-[34px] h-[34px] rounded-full relative">
                     {activeSeller.some(
                       (c) => c.sellerId === currentFd.fdId,
                     ) && (
-                      <div className="w-[10px] h-[10px] rounded-full bg-green-500 absolute right-0 bottom-0"></div>
+                      <div className="w-[10px] h-[10px] rounded-full bg-green-500 border-2 border-white absolute right-0 bottom-0 z-10"></div>
                     )}
-                    <img src={currentFd.image} />
+                    <img src={currentFd.image} className="w-full h-full rounded-full object-cover border border-slate-200" />
                   </div>
                   <span>{currentFd.name}</span>
                 </div>
@@ -158,7 +172,7 @@ const Chat = () => {
                         >
                           <img
                             className="w-[30px] h-[30px] "
-                            src="http://localhost:3000/images/user.png"
+                            src="/images/user.png"
                             alt=""
                           />
                           <div className="p-2 bg-purple-500 text-white rounded-md">
@@ -175,7 +189,7 @@ const Chat = () => {
                         >
                           <img
                             className="w-[30px] h-[30px] "
-                            src="http://localhost:3000/images/user.png"
+                            src="/images/user.png"
                             alt=""
                           />
                           <div className="p-2 bg-cyan-500 text-white rounded-md">

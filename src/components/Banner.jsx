@@ -37,7 +37,7 @@ const Banner = () => {
       <div className="w-[85%] lg:w-[90%] mx-auto">
         <div className="w-full flex flex-wrap md-lg:gap-8">
           <div className="w-full">
-            <div className="my-8">
+            <div className="my-8 rounded-2xl overflow-hidden shadow-soft">
               <Carousel
                 autoPlay={true}
                 infinite={true}
@@ -48,7 +48,11 @@ const Banner = () => {
                 {banners.length > 0 &&
                   banners.map((b, i) => (
                     <Link key={i} to={`product/details/${b.link}`}>
-                      <img src={b.banner} alt="" />
+                      <img
+                        src={b.banner}
+                        className="w-full h-full object-cover"
+                        alt=""
+                      />
                     </Link>
                   ))}
               </Carousel>

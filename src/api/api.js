@@ -1,7 +1,8 @@
 import axios from "axios";
-let api_url = 'https://multi-vendor-eccomerce-backend-1.onrender.com';
+import { API_BASE_URL } from "../config/app";
+
 const api = axios.create({
-    baseURL: `${api_url}/api`,
+    baseURL: API_BASE_URL,
     withCredentials:true
 })
 

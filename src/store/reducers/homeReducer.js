@@ -7,10 +7,9 @@ export const get_category = createAsyncThunk(
     async(_, { fulfillWithValue,rejectWithValue }) => {
         try {
             const {data} = await api.get('/home/get-categorys')
-            // console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -21,10 +20,9 @@ export const get_products = createAsyncThunk(
     async(_, { fulfillWithValue,rejectWithValue}) => {
         try {
             const {data} = await api.get('/home/get-products')
-             console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -37,10 +35,9 @@ export const get_price_range = createAsyncThunk(
     async(_, { fulfillWithValue,rejectWithValue}) => {
         try {
             const {data} = await api.get('/home/get_price_range')
-             console.log("in home reducer",data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -62,10 +59,9 @@ export const query_products = createAsyncThunk(
     searchValue: query.searchValue || ''
   }
 });
-            //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.response)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -77,10 +73,9 @@ export const product_details = createAsyncThunk(
     async(slug, { fulfillWithValue,rejectWithValue }) => {
         try {
             const {data} = await api.get(`/home/product-details/${slug}`)
-            //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -92,10 +87,9 @@ export const customer_review = createAsyncThunk(
     async(info, { fulfillWithValue,rejectWithValue}) => {
         try {
             const {data} = await api.post('/home/customer/submit-review',info)
-            //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -108,10 +102,9 @@ export const get_reviews = createAsyncThunk(
     async({productId, pageNumber}, { fulfillWithValue,rejectWithValue}) => {
         try {
             const {data} = await api.get(`/home/customer/get-reviews/${productId}?pageNo=${pageNumber}`)
-            //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -124,10 +117,9 @@ export const get_banners = createAsyncThunk(
     async( _ , { fulfillWithValue,rejectWithValue}) => {
         try {
             const {data} = await api.get(`/banners`)
-            //  console.log(data)
             return fulfillWithValue(data)
         } catch (error) {
-            console.log(error.respone)
+            if (process.env.NODE_ENV !== 'production') console.error(error.response)
             return rejectWithValue(error)
         }
     }
@@ -184,8 +176,6 @@ export const homeReducer = createSlice({
              state.loader = true;
        })
             .addCase(get_price_range.fulfilled, (state, { payload }) => {
-                console.log("state", state);
-                console.log("payload", payload);
                 state.priceRange=payload.priceRange
         }  )  
         .addCase(query_products.fulfilled, (state, { payload }) => { 
