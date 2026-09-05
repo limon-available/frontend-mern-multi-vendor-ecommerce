@@ -8,6 +8,7 @@ import Shipping from "./pages/Shipping";
 import Details from "./pages/Details";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import BecomeSeller from "./pages/BecomeSeller";
 import { get_category } from "./store/reducers/homeReducer";
 import { useDispatch, useSelector } from "react-redux";
 import CategoryShop from "./pages/CategoryShop";
@@ -52,6 +53,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/become-a-seller" element={<BecomeSeller />} />
 
         <Route path="/dashboard" element={<ProtectUser />}>
           <Route path="" element={<Dashboard />}>

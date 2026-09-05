@@ -96,6 +96,21 @@ const Footer = () => {
                     <Link to="/blog">Blogs </Link>
                   </li>
                 </ul>
+
+                <ul className="flex flex-col gap-2 text-slate-400 text-sm font-medium [&_a:hover]:text-emerald-400 [&_a]:transition-colors">
+                  <li>
+                    <h2 className="font-bold text-lg mb-2 text-white">For Sellers</h2>
+                  </li>
+                  <li>
+                    <a
+                      href="https://seller.limontechno.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Seller Login
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

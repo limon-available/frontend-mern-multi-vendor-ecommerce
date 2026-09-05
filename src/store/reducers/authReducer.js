@@ -14,6 +14,19 @@ export const customer_register = createAsyncThunk(
         }
     }
 )
+
+export const seller_register = createAsyncThunk(
+    'auth/seller_register',
+    async(info, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/auth/seller-register', info)
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
+
 // End Method 
 
 export const customer_login = createAsyncThunk(
@@ -131,6 +144,17 @@ export const authReducer = createSlice({
             state.successMessage = payload.message;
             state.loader = false;
             state.userInfo = payload.userInfo
+        })
+        .addCase(seller_register.pending, (state) => {
+            state.loader = true;
+        })
+        .addCase(seller_register.rejected, (state, { payload }) => {
+            state.errorMessage = payload?.error || "Registration failed";
+            state.loader = false;
+        })
+        .addCase(seller_register.fulfilled, (state, { payload }) => {
+            state.successMessage = payload.message;
+            state.loader = false;
         })
         .addCase(get_user_info.pending, (state) => {
             state.userLoaded = false;
