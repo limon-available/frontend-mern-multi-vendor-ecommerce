@@ -6,7 +6,6 @@ import Categorys from "../components/Categorys";
 import FeatureProducts from "../components/products/FeatureProducts";
 import Products from "../components/products/Products";
 import Footer from "../components/Footer";
-import SellerCta from "../components/SellerCta";
 import { useDispatch, useSelector } from "react-redux";
 import { get_products } from "../store/reducers/homeReducer";
 
@@ -110,9 +109,6 @@ const Home = () => {
           </div>
         </div>
       </section>
-
-      {/* Seller CTA */}
-      <SellerCta />
 
       {/* promo carousel */}
       <Banner />

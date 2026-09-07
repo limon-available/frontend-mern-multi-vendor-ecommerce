@@ -38,6 +38,7 @@ const NAV_LINKS = [
   { to: "/blog", label: "Blog" },
   { to: "/about", label: "About Us" },
   { to: "/contact", label: "Contact Us" },
+  { to: "/become-a-seller", label: "Become a Seller" },
 ];
 
 const Header = () => {
@@ -493,20 +494,23 @@ const Header = () => {
                   <ul className="flex items-center gap-1 text-sm font-semibold">
                     {NAV_LINKS.map((l) => {
                       const active = pathname === l.to;
+                      const isSellerCta = l.to === "/become-a-seller";
                       return (
                         <li key={l.to}>
                           <Link
                             to={l.to}
                             className={`relative px-4 py-2 block rounded-lg transition-colors ${
-                              active
-                                ? "text-[#059473]"
-                                : "text-slate-600 hover:text-[#059473] hover:bg-emerald-50"
+                              isSellerCta
+                                ? "bg-gradient-to-r from-[#059473] to-[#047857] text-white shadow-sm hover:shadow-md hover:shadow-emerald-500/30 hover:from-[#047857] hover:to-[#065f46]"
+                                : active
+                                  ? "text-[#059473]"
+                                  : "text-slate-600 hover:text-[#059473] hover:bg-emerald-50"
                             }`}
                           >
                             {l.label}
                             <span
                               className={`absolute left-4 right-4 -bottom-[1px] h-[2px] rounded-full bg-[#059473] transition-all ${
-                                active ? "opacity-100" : "opacity-0"
+                                active && !isSellerCta ? "opacity-100" : "opacity-0"
                               }`}
                             />
                           </Link>
@@ -611,21 +615,26 @@ const Header = () => {
                 Menu
               </p>
               <ul className="flex flex-col">
-                {NAV_LINKS.map((l) => (
-                  <li key={l.to}>
-                    <Link
-                      to={l.to}
-                      onClick={() => setShowShidebar(true)}
-                      className={`block py-2.5 px-3 rounded-lg font-semibold transition-colors ${
-                        pathname === l.to
-                          ? "bg-emerald-50 text-[#059473]"
-                          : "text-slate-600 hover:bg-slate-50"
-                      }`}
-                    >
-                      {l.label}
-                    </Link>
-                  </li>
-                ))}
+                {NAV_LINKS.map((l) => {
+                  const isSellerCta = l.to === "/become-a-seller";
+                  return (
+                    <li key={l.to}>
+                      <Link
+                        to={l.to}
+                        onClick={() => setShowShidebar(true)}
+                        className={`block py-2.5 px-3 rounded-lg font-semibold transition-colors ${
+                          isSellerCta
+                            ? "bg-gradient-to-r from-[#059473] to-[#047857] text-white text-center shadow-sm hover:shadow-md hover:shadow-emerald-500/30 hover:from-[#047857] hover:to-[#065f46]"
+                            : pathname === l.to
+                              ? "bg-emerald-50 text-[#059473]"
+                              : "text-slate-600 hover:bg-slate-50"
+                        }`}
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
 
