@@ -19,7 +19,7 @@ export const seller_register = createAsyncThunk(
     'auth/seller_register',
     async(info, { rejectWithValue, fulfillWithValue }) => {
         try {
-            const { data } = await api.post('/auth/seller-register', info)
+            const { data } = await api.post('/auth/seller-register', info,{withCredentials:true})
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -68,18 +68,6 @@ export const customer_facebook_login = createAsyncThunk(
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
-        }
-    }
-)
-
-export const seller_register = createAsyncThunk(
-    'auth/seller_register',
-    async(info, { rejectWithValue, fulfillWithValue }) => {
-        try {
-            const { data } = await api.post('/seller-register', info, { withCredentials: true })
-            return fulfillWithValue(data)
-        } catch (error) {
-            return rejectWithValue(error.response?.data || { error: 'server not responding' })
         }
     }
 )
@@ -157,17 +145,7 @@ export const authReducer = createSlice({
             state.loader = false;
             state.userInfo = payload.userInfo
         })
-        .addCase(seller_register.pending, (state) => {
-            state.loader = true;
-        })
-        .addCase(seller_register.rejected, (state, { payload }) => {
-            state.errorMessage = payload?.error || "Registration failed";
-            state.loader = false;
-        })
-        .addCase(seller_register.fulfilled, (state, { payload }) => {
-            state.successMessage = payload.message;
-            state.loader = false;
-        })
+     
         .addCase(get_user_info.pending, (state) => {
             state.userLoaded = false;
             state.loader = true;
