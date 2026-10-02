@@ -153,16 +153,20 @@ const Header = () => {
       {/* ===================== TOP UTILITY BAR ===================== */}
       <div className="bg-slate-900 text-slate-300 text-[13px] md-lg:hidden">
         <div className="w-[85%] lg:w-[90%] mx-auto">
-          <div className="flex justify-between items-center h-[42px]">
-            {/* contact */}
-            <ul className="flex items-center gap-6">
-              <li className="flex items-center gap-2">
-                <MdEmail className="text-emerald-400" />
+          <div className="flex w-full justify-between items-center h-[50px] text-slate-500">
+            <ul className="flex justify-start items-center gap-8 font-semibold text-black">
+              <li className="flex relative justify-center items-center gap-2 text-sm after:absolute after:h-[18px] after:w-[1px] after:bg-[#afafaf] after:-right-[16px]">
+                <span>
+                  <MdEmail />
+                </span>
                 <span>mdlimon.tech@gmail.com</span>
               </li>
-              <li className="flex items-center gap-2 lg:hidden">
-                <IoMdPhonePortrait className="text-emerald-400" />
-                <span>+(123) 3243 343</span>
+
+              <li className="flex relative justify-center items-center gap-2 text-sm ">
+                <span>
+                  <IoMdPhonePortrait />
+                </span>
+                <span>+880 1935073101</span>
               </li>
             </ul>
 
@@ -528,14 +532,23 @@ const Header = () => {
                 <span className="flex w-[40px] h-[40px] items-center justify-center rounded-full bg-emerald-50 text-[#059473]">
                   <FaPhoneAlt />
                 </span>
-                <div className="leading-tight">
-                  <p className="text-sm font-bold text-slate-800">
-                    +8801935073101
-                  </p>
-                  <p className="text-xs text-slate-400">24/7 Support</p>
-                </div>
+              </div>
+              <div className="flex justify-end flex-col gap-1">
+                <h2 className="text-sm font-medium text-slate-700">
+                  +8801935073101
+                </h2>
+                <span className="text-xs">Support 24/7</span>
               </div>
             </div>
+
+            <ul className="flex flex-col justify-start items-start gap-3 text-[#1c1c1c]">
+              <li className="flex justify-start items-center gap-2 text-sm">
+                <span>
+                  <MdEmail />
+                </span>
+                <span>mdlimon.tech@gmail.com</span>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -720,27 +733,21 @@ const Header = () => {
                   <p className="text-xs text-slate-400">24/7 Support</p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-slate-600 mb-4">
-                <MdEmail className="text-[#059473]" />
-                <span>mdlimon.tech@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-3">
-                {[
-                  { href: SOCIAL_LINKS.facebook, icon: <FaFacebookF /> },
-                  { href: SOCIAL_LINKS.twitter, icon: <FaTwitter /> },
-                  { href: SOCIAL_LINKS.linkedin, icon: <FaLinkedin /> },
-                  { href: SOCIAL_LINKS.github, icon: <FaGithub /> },
-                ].map((s, i) => (
-                  <a
-                    key={i}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 text-slate-600 hover:bg-[#059473] hover:text-white transition-all"
-                  >
-                    {s.icon}
-                  </a>
-                ))}
+
+              <div className="w-4/12 block md-lg:hidden pl-2 md-lg:w-full md-lg:pl-0">
+                <div className="w-full flex justify-end md-lg:justify-start gap-3 items-center">
+                  <div className="w-[48px] h-[48px] rounded-full flex bg-[#f5f5f5] justify-center items-center ">
+                    <span>
+                      <FaPhoneAlt />
+                    </span>
+                  </div>
+                  <div className="flex justify-end flex-col gap-1">
+                    <h2 className="text-md font-medium text-slate-700">
+                      +8801935073101
+                    </h2>
+                    <span className="text-sm">Support 24/7</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

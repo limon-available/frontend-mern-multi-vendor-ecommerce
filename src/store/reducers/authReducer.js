@@ -19,7 +19,7 @@ export const seller_register = createAsyncThunk(
     'auth/seller_register',
     async(info, { rejectWithValue, fulfillWithValue }) => {
         try {
-            const { data } = await api.post('/auth/seller-register', info)
+            const { data } = await api.post('/auth/seller-register', info,{withCredentials:true})
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
@@ -145,17 +145,7 @@ export const authReducer = createSlice({
             state.loader = false;
             state.userInfo = payload.userInfo
         })
-        .addCase(seller_register.pending, (state) => {
-            state.loader = true;
-        })
-        .addCase(seller_register.rejected, (state, { payload }) => {
-            state.errorMessage = payload?.error || "Registration failed";
-            state.loader = false;
-        })
-        .addCase(seller_register.fulfilled, (state, { payload }) => {
-            state.successMessage = payload.message;
-            state.loader = false;
-        })
+     
         .addCase(get_user_info.pending, (state) => {
             state.userLoaded = false;
             state.loader = true;
@@ -181,29 +171,16 @@ export const authReducer = createSlice({
             state.loader =false;
             state.userInfo =payload.userInfo
         })
-        .addCase(customer_google_login.pending, (state) => {
+        .addCase(seller_register.pending, (state) => {
             state.loader = true;
         })
-        .addCase(customer_google_login.rejected, (state, { payload }) => {
+        .addCase(seller_register.rejected, (state, { payload }) => {
             state.loader = false;
-            state.errorMessage = payload?.error || "Google sign-in failed";
+            state.errorMessage = payload?.error || 'Something went wrong';
         })
-        .addCase(customer_google_login.fulfilled, (state, { payload }) => {
-            state.loader = false;
-            state.successMessage = payload.message;
-            state.userInfo = payload.userInfo;
-        })
-        .addCase(customer_facebook_login.pending, (state) => {
-            state.loader = true;
-        })
-        .addCase(customer_facebook_login.rejected, (state, { payload }) => {
-            state.loader = false;
-            state.errorMessage = payload?.error || "Facebook sign-in failed";
-        })
-        .addCase(customer_facebook_login.fulfilled, (state, { payload }) => {
+        .addCase(seller_register.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.successMessage = payload.message;
-            state.userInfo = payload.userInfo;
         })
                     .addCase(logout.fulfilled, (state) => {
                 state.userInfo =null;

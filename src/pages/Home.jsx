@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Banner from "../components/Banner";
+import SellerCta from "../components/SellerCta";
 import Categorys from "../components/Categorys";
 import FeatureProducts from "../components/products/FeatureProducts";
 import Products from "../components/products/Products";
@@ -112,27 +113,7 @@ const Home = () => {
 
       {/* promo carousel */}
       <Banner />
-
-      {/* Trust / perks strip */}
-      <div className="w-[85%] lg:w-[90%] mx-auto -mt-2 mb-6">
-        <div className="grid grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-4 bg-white/80 glass-panel rounded-2xl shadow-card border border-emerald-50 p-5">
-          {perks.map((p, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-emerald-50/70 transition-colors"
-            >
-              <span className="text-2xl w-12 h-12 flex items-center justify-center rounded-full bg-emerald-50 shrink-0">
-                {p.icon}
-              </span>
-              <div>
-                <h4 className="font-bold text-slate-800 leading-tight">{p.title}</h4>
-                <p className="text-xs text-slate-500">{p.desc}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
+      <SellerCta />
       <Categorys />
 
       <div className="py-[45px]">
@@ -154,10 +135,14 @@ const Home = () => {
                   Discover thousands of products from trusted vendors
                 </h2>
                 <p className="text-white/80 mt-3">
-                  Quality you can trust, prices you will love — all in one marketplace.
+                  Quality you can trust, prices you will love — all in one
+                  marketplace.
                 </p>
               </div>
-              <Link to="/shops" className="btn btn-lg btn-light whitespace-nowrap">
+              <Link
+                to="/shops"
+                className="btn btn-lg btn-light whitespace-nowrap"
+              >
                 Shop Now
               </Link>
             </div>

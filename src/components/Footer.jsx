@@ -56,10 +56,12 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="w-5/12 lg:w-8/12 sm:w-full">
+        <div className="w-4/12 lg:w-5/12 sm:w-full">
           <div className="flex justify-center sm:justify-start sm:mt-6 w-full">
             <div>
-              <h2 className="font-bold text-lg mb-2 text-white">Usefull Links </h2>
+              <h2 className="font-bold text-lg mb-2 text-white">
+                Usefull Links{" "}
+              </h2>
               <div className="flex justify-between gap-[80px] lg:gap-[40px]">
                 <ul className="flex flex-col gap-2 text-slate-400 text-sm font-medium [&_a:hover]:text-emerald-400 [&_a]:transition-colors">
                   <li>
@@ -99,7 +101,9 @@ const Footer = () => {
 
                 <ul className="flex flex-col gap-2 text-slate-400 text-sm font-medium [&_a:hover]:text-emerald-400 [&_a]:transition-colors">
                   <li>
-                    <h2 className="font-bold text-lg mb-2 text-white">For Sellers</h2>
+                    <h2 className="font-bold text-lg mb-2 text-white">
+                      For Sellers
+                    </h2>
                   </li>
                   <li>
                     <a
@@ -116,7 +120,33 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="w-4/12 lg:w-full lg:mt-6">
+        <div className="w-2/12 lg:w-3/12 sm:w-full">
+          <div className="flex flex-col gap-3 sm:mt-6">
+            <h2 className="font-bold text-lg mb-2">For Sellers</h2>
+            <ul className="flex flex-col gap-2 text-slate-600 text-sm font-semibold">
+              <li>
+                <Link
+                  to="/become-a-seller"
+                  className="hover:text-[#059473] transition-all duration-200"
+                >
+                  Become a Seller
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="https://seller.limontechno.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#059473] transition-all duration-200"
+                >
+                  Seller Login
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="w-3/12 lg:w-full lg:mt-6">
           <div className="w-full flex flex-col justify-start gap-5">
             <h2 className="font-bold text-lg mb-2 text-white">Join Our Shop</h2>
             <span className="text-slate-400">
