@@ -158,7 +158,7 @@ const Header = () => {
             <ul className="flex items-center gap-6">
               <li className="flex items-center gap-2">
                 <MdEmail className="text-emerald-400" />
-                <span>support@gmail.com</span>
+                <span>mdlimon.tech@gmail.com</span>
               </li>
               <li className="flex items-center gap-2 lg:hidden">
                 <IoMdPhonePortrait className="text-emerald-400" />
@@ -510,7 +510,9 @@ const Header = () => {
                             {l.label}
                             <span
                               className={`absolute left-4 right-4 -bottom-[1px] h-[2px] rounded-full bg-[#059473] transition-all ${
-                                active && !isSellerCta ? "opacity-100" : "opacity-0"
+                                active && !isSellerCta
+                                  ? "opacity-100"
+                                  : "opacity-0"
                               }`}
                             />
                           </Link>
@@ -528,7 +530,7 @@ const Header = () => {
                 </span>
                 <div className="leading-tight">
                   <p className="text-sm font-bold text-slate-800">
-                    +1343-43233455
+                    +8801935073101
                   </p>
                   <p className="text-xs text-slate-400">24/7 Support</p>
                 </div>
@@ -720,7 +722,7 @@ const Header = () => {
               </div>
               <div className="flex items-center gap-2 text-sm text-slate-600 mb-4">
                 <MdEmail className="text-[#059473]" />
-                <span>support@gmail.com</span>
+                <span>mdlimon.tech@gmail.com</span>
               </div>
               <div className="flex items-center gap-3">
                 {[
