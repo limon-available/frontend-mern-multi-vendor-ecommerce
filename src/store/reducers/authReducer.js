@@ -72,6 +72,18 @@ export const customer_facebook_login = createAsyncThunk(
     }
 )
 
+export const seller_register = createAsyncThunk(
+    'auth/seller_register',
+    async(info, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const { data } = await api.post('/seller-register', info, { withCredentials: true })
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response?.data || { error: 'server not responding' })
+        }
+    }
+)
+
 export const get_user_info = createAsyncThunk(
     'auth/get_user_info',
     async(_ ,{rejectWithValue, fulfillWithValue}) => {
@@ -181,29 +193,16 @@ export const authReducer = createSlice({
             state.loader =false;
             state.userInfo =payload.userInfo
         })
-        .addCase(customer_google_login.pending, (state) => {
+        .addCase(seller_register.pending, (state) => {
             state.loader = true;
         })
-        .addCase(customer_google_login.rejected, (state, { payload }) => {
+        .addCase(seller_register.rejected, (state, { payload }) => {
             state.loader = false;
-            state.errorMessage = payload?.error || "Google sign-in failed";
+            state.errorMessage = payload?.error || 'Something went wrong';
         })
-        .addCase(customer_google_login.fulfilled, (state, { payload }) => {
-            state.loader = false;
-            state.successMessage = payload.message;
-            state.userInfo = payload.userInfo;
-        })
-        .addCase(customer_facebook_login.pending, (state) => {
-            state.loader = true;
-        })
-        .addCase(customer_facebook_login.rejected, (state, { payload }) => {
-            state.loader = false;
-            state.errorMessage = payload?.error || "Facebook sign-in failed";
-        })
-        .addCase(customer_facebook_login.fulfilled, (state, { payload }) => {
+        .addCase(seller_register.fulfilled, (state, { payload }) => {
             state.loader = false;
             state.successMessage = payload.message;
-            state.userInfo = payload.userInfo;
         })
                     .addCase(logout.fulfilled, (state) => {
                 state.userInfo =null;
