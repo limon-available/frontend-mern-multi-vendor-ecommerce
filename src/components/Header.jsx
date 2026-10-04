@@ -172,63 +172,6 @@ const Header = () => {
             {/* prefs + social */}
             <div className="flex items-center gap-5">
               {/* Language */}
-              <div className="relative group">
-                <button className="flex items-center gap-1.5 hover:text-white transition-colors">
-                  <img
-                    src={currentLanguage.flag}
-                    alt={currentLanguage.label}
-                    className="w-4 h-4 object-contain"
-                  />
-                  <span>{currentLanguage.label}</span>
-                  <MdKeyboardArrowDown />
-                </button>
-                <ul className="absolute right-0 top-full pt-2 w-[140px] invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50">
-                  <div className="bg-white rounded-lg shadow-soft border border-slate-100 py-1 overflow-hidden">
-                    {LANGUAGES.map((l) => (
-                      <li
-                        key={l.code}
-                        onClick={() => selectLanguage(l.code)}
-                        className={`px-4 py-2 text-slate-600 hover:bg-emerald-50 hover:text-[#059473] cursor-pointer ${
-                          language === l.code
-                            ? "text-[#059473] font-semibold bg-emerald-50/60"
-                            : ""
-                        }`}
-                      >
-                        {l.label}
-                      </li>
-                    ))}
-                  </div>
-                </ul>
-              </div>
-
-              {/* Currency */}
-              <div className="relative group">
-                <button className="flex items-center gap-1.5 hover:text-white transition-colors">
-                  <span className="font-semibold text-emerald-400">
-                    {currentCurrency.symbol}
-                  </span>
-                  <span>{currentCurrency.label}</span>
-                  <MdKeyboardArrowDown />
-                </button>
-                <ul className="absolute right-0 top-full pt-2 w-[120px] invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 z-50">
-                  <div className="bg-white rounded-lg shadow-soft border border-slate-100 py-1 overflow-hidden">
-                    {CURRENCIES.map((c) => (
-                      <li
-                        key={c.code}
-                        onClick={() => selectCurrency(c.code)}
-                        className={`px-4 py-2 text-slate-600 hover:bg-emerald-50 hover:text-[#059473] cursor-pointer flex items-center gap-2 ${
-                          currency === c.code
-                            ? "text-[#059473] font-semibold bg-emerald-50/60"
-                            : ""
-                        }`}
-                      >
-                        <span className="w-3">{c.symbol}</span>
-                        {c.label}
-                      </li>
-                    ))}
-                  </div>
-                </ul>
-              </div>
 
               <div className="h-4 w-px bg-slate-700" />
 
@@ -288,7 +231,7 @@ const Header = () => {
               </button>
               <Link to="/" className="block">
                 <img
-                  src="/images/logo.png"
+                  src="/images/logo.jfif"
                   alt="LimonTech"
                   className="h-[46px] md:h-[40px] w-auto object-contain"
                 />
@@ -533,15 +476,6 @@ const Header = () => {
                 <span className="text-xs">Support 24/7</span>
               </div>
             </div>
-
-            <ul className="flex flex-col justify-start items-start gap-3 text-[#1c1c1c]">
-              <li className="flex justify-start items-center gap-2 text-sm">
-                <span>
-                  <MdEmail />
-                </span>
-                <span>mdlimon.tech@gmail.com</span>
-              </li>
-            </ul>
           </div>
         </div>
       </div>
