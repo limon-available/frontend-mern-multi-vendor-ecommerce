@@ -34,7 +34,12 @@ const Contact = () => {
             <div className="flex flex-col justify-center gap-1 items-center h-full w-full text-white">
               <h2 className="text-4xl font-bold font-display">Contact Us</h2>
               <div className="flex justify-center items-center gap-2 text-xl w-full">
-                <Link to="/" className="hover:text-emerald-300 transition-colors">Home</Link>
+                <Link
+                  to="/"
+                  className="hover:text-emerald-300 transition-colors"
+                >
+                  Home
+                </Link>
                 <span className="pt-1">
                   <IoIosArrowForward />
                 </span>
@@ -60,7 +65,7 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold text-slate-700">Address</h3>
                     <p className="text-slate-600 text-sm">
-                      2504 Ivins Avenue, Egg Harbor Township, NJ 08234
+                      Santosh,Tangail Sadar,Tangail
                     </p>
                   </div>
                 </div>
@@ -70,7 +75,7 @@ const Contact = () => {
                   </span>
                   <div>
                     <h3 className="font-semibold text-slate-700">Phone</h3>
-                    <p className="text-slate-600 text-sm">+(123) 3243 343</p>
+                    <p className="text-slate-600 text-sm">+8801935073101</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -79,7 +84,7 @@ const Contact = () => {
                   </span>
                   <div>
                     <h3 className="font-semibold text-slate-700">Email</h3>
-                    <p className="text-slate-600 text-sm">support@gmail.com</p>
+                    <p className="text-slate-600 text-sm">support@limon.com</p>
                   </div>
                 </div>
               </div>
