@@ -42,16 +42,14 @@ const Footer = () => {
         <div className="w-3/12 lg:w-4/12 sm:w-full">
           <div className="flex flex-col gap-3">
             <img
-              className="w-[190px] h-[70px] object-contain brightness-0 invert"
-              src="/images/logo.png"
+              className="w-[190px] h-[70px] object-contain  invert"
+              src="/images/logo.jfif"
               alt="logo"
             />
             <ul className="flex flex-col gap-2 text-slate-400">
-              <li>
-                Address : 2504 Ivins Avenue, Egg Harbor Township, NJ 08234,
-              </li>
-              <li>Phone : 4343434344</li>
-              <li>Email : support@easylearingbd.com</li>
+              <li>Address : Santosh,Tangail Sadar,Tangail</li>
+              <li>Phone :01935073101</li>
+              <li>Email : support@limon.com</li>
             </ul>
           </div>
         </div>
@@ -120,33 +118,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="w-2/12 lg:w-3/12 sm:w-full">
-          <div className="flex flex-col gap-3 sm:mt-6">
-            <h2 className="font-bold text-lg mb-2">For Sellers</h2>
-            <ul className="flex flex-col gap-2 text-slate-600 text-sm font-semibold">
-              <li>
-                <Link
-                  to="/become-a-seller"
-                  className="hover:text-[#059473] transition-all duration-200"
-                >
-                  Become a Seller
-                </Link>
-              </li>
-              <li>
-                <a
-                  href="https://seller.limontechno.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#059473] transition-all duration-200"
-                >
-                  Seller Login
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="w-3/12 lg:w-full lg:mt-6">
+        <div className="ml-4 lg:w-full lg:mt-6">
           <div className="w-full flex flex-col justify-start gap-5">
             <h2 className="font-bold text-lg mb-2 text-white">Join Our Shop</h2>
             <span className="text-slate-400">
