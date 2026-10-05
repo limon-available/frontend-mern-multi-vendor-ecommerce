@@ -20,7 +20,7 @@ const Wishlist = () => {
     if (userInfo?._id) {
       dispatch(get_wishlist_products(userInfo._id));
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo?._id]);
 
   useEffect(() => {
     if (successMessage) {
@@ -43,7 +43,11 @@ const Wishlist = () => {
               </div>
             )}
 
-            <img className="sm:w-full w-full h-[240px] object-cover transition-transform duration-500 group-hover:scale-105" src={p.image} alt="" />
+            <img
+              className="sm:w-full w-full h-[240px] object-cover transition-transform duration-500 group-hover:scale-105"
+              src={p.image}
+              alt=""
+            />
 
             <ul className="flex transition-all duration-500 -bottom-12 justify-center items-center gap-2 absolute w-full group-hover:bottom-3">
               <li
@@ -67,7 +71,9 @@ const Wishlist = () => {
           <div className="py-4 text-slate-600 px-4">
             <h2 className="font-semibold text-slate-800 truncate">{p.name} </h2>
             <div className="flex justify-between items-center gap-3 mt-2">
-              <span className="text-lg font-bold text-[#059473]">${p.price}</span>
+              <span className="text-lg font-bold text-[#059473]">
+                ${p.price}
+              </span>
               <div className="flex">
                 <Rating ratings={p.rating} />
               </div>
