@@ -33,10 +33,8 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(get_category());
-    if (userInfo) {
-      dispatch(get_user_info());
-    }
-  }, [dispatch, userInfo?._id]);
+    dispatch(get_user_info());
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
