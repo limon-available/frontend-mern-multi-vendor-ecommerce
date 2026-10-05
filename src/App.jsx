@@ -36,7 +36,7 @@ function App() {
     if (userInfo) {
       dispatch(get_user_info());
     }
-  }, [dispatch, userInfo]);
+  }, [dispatch, userInfo?._id]);
 
   return (
     <BrowserRouter>
