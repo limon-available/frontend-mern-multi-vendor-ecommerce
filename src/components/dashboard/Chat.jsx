@@ -3,10 +3,11 @@ import { AiOutlineMessage, AiOutlinePlus } from "react-icons/ai";
 import { GrEmoji } from "react-icons/gr";
 import { IoSend } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   add_friend,
   get_friends,
+  get_sellers,
   messageClear,
   send_message,
   updateMessage,
@@ -14,20 +15,32 @@ import {
 import toast from "react-hot-toast";
 import socket from "../../utils/socket";
 import { FaList } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import sellerPlaceholder from "../../assets/seller.png";
 
 const Chat = () => {
   const scrollRef = useRef();
+  const pickerSelectionRef = useRef(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { sellerId } = useParams();
   const { userInfo } = useSelector((state) => state.auth);
-  const { fb_messages, currentFd, my_friends, successMessage } = useSelector(
-    (state) => state.chat,
-  );
+  const {
+    fb_messages,
+    currentFd,
+    my_friends,
+    successMessage,
+    sellers,
+    sellersLoading,
+    sellersError,
+    addFriendLoading,
+  } = useSelector((state) => state.chat);
   const [text, setText] = useState("");
   const [receverMessage, setReceverMessage] = useState("");
   const [activeSeller, setActiveSeller] = useState([]);
   const [show, setShow] = useState(false);
+  const [showSellerPicker, setShowSellerPicker] = useState(false);
 
   useEffect(() => {
     if (userInfo?._id) {
@@ -41,13 +54,19 @@ const Chat = () => {
     if (userInfo?._id) {
       dispatch(get_friends());
     }
-  }, [userInfo]);
+  }, [dispatch, userInfo]);
 
   useEffect(() => {
     // Only fetch a conversation once a seller is actually selected. On the
     // bare /dashboard/chat route there is no :sellerId param, so dispatching
     // here would POST an empty sellerId and fail backend validation.
-    if (userInfo?._id && sellerId) {
+    if (pickerSelectionRef.current && sellerId !== pickerSelectionRef.current) {
+      return;
+    }
+    if (pickerSelectionRef.current === sellerId) {
+      pickerSelectionRef.current = null;
+    }
+    if (userInfo?._id && sellerId && currentFd?.fdId !== sellerId) {
       dispatch(
         add_friend({
           sellerId,
@@ -55,7 +74,7 @@ const Chat = () => {
         }),
       );
     }
-  }, [sellerId, userInfo]);
+  }, [currentFd, dispatch, sellerId, userInfo]);
 
   const send = () => {
     if (text) {
@@ -68,6 +87,28 @@ const Chat = () => {
         }),
       );
       setText("");
+    }
+  };
+
+  const openSellerPicker = () => {
+    setShowSellerPicker(true);
+    dispatch(get_sellers());
+  };
+
+  const selectSeller = async (selectedSellerId) => {
+    pickerSelectionRef.current = selectedSellerId;
+    try {
+      await dispatch(
+        add_friend({
+          sellerId: selectedSellerId,
+          userId: userInfo._id,
+        }),
+      ).unwrap();
+      setShowSellerPicker(false);
+      navigate(`/dashboard/chat/${selectedSellerId}`);
+    } catch (error) {
+      pickerSelectionRef.current = null;
+      toast.error(error?.error || "Unable to open chat with this seller");
     }
   };
 
@@ -117,6 +158,14 @@ const Chat = () => {
             </span>
             <span>Message</span>
           </div>
+          <button
+            type="button"
+            onClick={openSellerPicker}
+            className="w-full flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-700 transition-colors"
+          >
+            <AiOutlinePlus />
+            <span>Find Sellers</span>
+          </button>
           <div className="w-full flex flex-col text-slate-600 py-4 h-[400px] pr-3">
             {my_friends.map((f, i) => (
               <Link
@@ -129,7 +178,7 @@ const Chat = () => {
                     <div className="w-[10px] h-[10px] rounded-full bg-green-500 border-2 border-white absolute right-0 bottom-0 z-10"></div>
                   )}
 
-                  <img src={f.image} className="w-full h-full rounded-full object-cover border border-slate-200" alt="" />
+                  <img src={f.image || sellerPlaceholder} className="w-full h-full rounded-full object-cover border border-slate-200" alt="" />
                 </div>
                 <span>{f.name}</span>
               </Link>
@@ -148,7 +197,7 @@ const Chat = () => {
                     ) && (
                       <div className="w-[10px] h-[10px] rounded-full bg-green-500 border-2 border-white absolute right-0 bottom-0 z-10"></div>
                     )}
-                    <img src={currentFd.image} className="w-full h-full rounded-full object-cover border border-slate-200" />
+                    <img src={currentFd.image || sellerPlaceholder} className="w-full h-full rounded-full object-cover border border-slate-200" alt="" />
                   </div>
                   <span>{currentFd.name}</span>
                 </div>
@@ -239,6 +288,82 @@ const Chat = () => {
           )}
         </div>
       </div>
+      {showSellerPicker && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setShowSellerPicker(false);
+            }
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="seller-picker-title"
+            className="w-full max-w-lg rounded-xl bg-white p-5 shadow-xl"
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <h2 id="seller-picker-title" className="text-lg font-semibold text-slate-800">
+                Find Sellers
+              </h2>
+              <button
+                type="button"
+                onClick={() => setShowSellerPicker(false)}
+                aria-label="Close seller list"
+                className="rounded p-1 text-slate-500 hover:bg-slate-100"
+              >
+                <IoClose size={22} />
+              </button>
+            </div>
+            <div className="max-h-[60vh] space-y-2 overflow-y-auto">
+              {sellersLoading ? (
+                <p className="py-8 text-center text-slate-500">Loading sellers...</p>
+              ) : sellersError ? (
+                <div className="py-6 text-center">
+                  <p className="mb-3 text-sm text-red-600">{sellersError}</p>
+                  <button
+                    type="button"
+                    onClick={() => dispatch(get_sellers())}
+                    className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700"
+                  >
+                    Try again
+                  </button>
+                </div>
+              ) : sellers.length === 0 ? (
+                <p className="py-8 text-center text-slate-500">No sellers found.</p>
+              ) : (
+                sellers.map((seller) => (
+                  <button
+                    type="button"
+                    key={seller._id}
+                    disabled={addFriendLoading}
+                    onClick={() => selectSeller(seller._id)}
+                    className="flex w-full items-center gap-3 rounded-lg border border-slate-200 p-3 text-left hover:border-emerald-500 hover:bg-emerald-50 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    <img
+                      src={seller.image || sellerPlaceholder}
+                      alt=""
+                      className="h-11 w-11 rounded-full border border-slate-200 object-cover"
+                    />
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate font-medium text-slate-800">
+                        {seller.shopInfo?.shopName || "Seller shop"}
+                      </span>
+                      <span className="block truncate text-xs text-slate-500">
+                        ID: {seller._id}
+                      </span>
+                    </span>
+                    {addFriendLoading && (
+                      <span className="text-xs text-slate-500">Opening...</span>
+                    )}
+                  </button>
+                ))
+              )}
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 };

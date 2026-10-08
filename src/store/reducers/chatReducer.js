@@ -8,7 +8,7 @@ export const add_friend = createAsyncThunk(
             const {data} = await api.post('/chat/customer/add-customer-friend',info)
             return fulfillWithValue(data)
         } catch (error) {
-            return rejectWithValue(error.response.data)
+            return rejectWithValue(error.response?.data ?? { error: error.message })
         }
     }
 )
@@ -22,6 +22,19 @@ export const get_friends = createAsyncThunk(
             return fulfillWithValue(data)
         } catch (error) {
             return rejectWithValue(error.response.data)
+        }
+    }
+)
+// End Method
+
+export const get_sellers = createAsyncThunk(
+    'chat/get_sellers',
+    async(_, { rejectWithValue, fulfillWithValue }) => {
+        try {
+            const {data} = await api.get('/chat/customer/get-sellers')
+            return fulfillWithValue(data)
+        } catch (error) {
+            return rejectWithValue(error.response?.data ?? { error: error.message })
         }
     }
 )
@@ -49,6 +62,10 @@ export const chatReducer = createSlice({
         my_friends: [],
         fb_messages : [],
         currentFd: "",
+        sellers: [],
+        sellersLoading: false,
+        sellersError: '',
+        addFriendLoading: false,
         errorMessage : '',
         successMessage: '', 
     },
@@ -72,6 +89,26 @@ export const chatReducer = createSlice({
             state.fb_messages = payload.messages;
             state.currentFd = payload.currentFd;
             state.my_friends = payload.MyFriends;
+            state.addFriendLoading = false;
+        })
+        .addCase(add_friend.pending, (state) => {
+            state.addFriendLoading = true;
+        })
+        .addCase(add_friend.rejected, (state, { payload }) => {
+            state.addFriendLoading = false;
+            state.errorMessage = payload?.error || 'Unable to add seller to chat';
+        })
+        .addCase(get_sellers.pending, (state) => {
+            state.sellersLoading = true;
+            state.sellersError = '';
+        })
+        .addCase(get_sellers.fulfilled, (state, { payload }) => {
+            state.sellers = payload.sellers;
+            state.sellersLoading = false;
+        })
+        .addCase(get_sellers.rejected, (state, { payload }) => {
+            state.sellersLoading = false;
+            state.sellersError = payload?.error || 'Unable to load sellers';
         })
         .addCase(send_message.fulfilled, (state, { payload }) => { 
             let tempFriends = state.my_friends
